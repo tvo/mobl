@@ -9,7 +9,7 @@ import org.strategoxt.lang.Strategy;
 public class InteropRegisterer extends JavaInteropRegisterer {
 
     public InteropRegisterer() {
-        super(new Strategy[] { deltree_0_0.instance, uglify_0_0.instance, compress_0_0.instance,
+        super(new Strategy[] { deltree_0_0.instance,/* uglify_0_0.instance,*/ compress_0_0.instance,
                 path_to_dataurl_0_0.instance });
     }
 }
