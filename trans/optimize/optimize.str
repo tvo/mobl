@@ -16,6 +16,7 @@ imports
 rules
 
   external uglify(|)
+  external compress(|)
 
   optimized-compile(|mod-name) :
     ast -> ast
@@ -47,7 +48,7 @@ rules
           ; all-js1 := <read-files-and-concat> special-js*
           ; all-js2 := <read-files-and-concat> [inlinable-js*, js-filename]
           ; setting* := <get-configuration>
-          ; all-js := <uglify> (<StdLibPath>, <concat-strings> [all-js1, <generate-db-init-code(|setting*)> ast, all-js2])
+          ; all-js := <compress> (<StdLibPath>, <concat-strings> [all-js1, <generate-db-init-code(|setting*)> ast, all-js2])
           //; all-js := <concat-strings> [all-js1, <generate-db-init-code(|setting*)> ast, all-js2]
           ; if <file-exists> css-filename then
               all-css := <read-files-and-concat> [inlinable-css*, css-filename]
@@ -117,7 +118,7 @@ rules
         <title>[<!<un-double-quote> title <+ <qid-to-js> qid>]</title>
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     </head>
     <body>

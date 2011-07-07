@@ -57,6 +57,9 @@ rules
     String(s) -> s
 
   style-exp-to-css :
+    StylePropVal(x, val) -> $[[x]=[<style-exp-to-css> val]]
+
+  style-exp-to-css :
     StylePath(p, p*) -> $[[p]/[<separate-by(|"/"); concat-strings> p*]]
 
   style-exp-to-css :

@@ -32,6 +32,7 @@ exports
     STRING                  -> StyleExp {cons("String")}
     NUMBER                  -> StyleExp {cons("Num")}
     NUMBER Unit             -> StyleExp {cons("NumUnit")}
+    STYLEID "=" StyleExp    -> StyleExp {cons("StylePropVal")}
     StyleVar                -> StyleExp
     StyleExp "+" StyleExp   -> StyleExp {cons("StyleAdd"), left}
     StyleExp "~" StyleExp   -> StyleExp {cons("StyleSub"), left}

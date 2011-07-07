@@ -5,7 +5,7 @@
   <property name="sdfmodule" value="MoBL" />
   <property name="esvmodule" value="MoBL" />
   <property name="strmodule" value="mobl" />
-  <property name="externaljar" value="utils/js.jar" />
+  <property name="externaljar" value="utils/yuicompressor.jar" />
   <property name="metasdfmodule" value="Stratego-MoBL"/>
   <property name="java.jar.enabled" value="true"/>
 
@@ -79,7 +79,7 @@
   </target>
 
   <target name="compile-java-strategies">
-    <javac classpath="utils/strategoxt.jar:utils/js.jar:java-src:${externaljarimport}${java.jar.classpath}" srcdir="editor/java" includes="mobl/strategies/**" destdir="${build}" source="1.5" target="1.5" debug="on"/>
+    <javac classpath="utils/strategoxt.jar:utils/yuicompressor.jar:java-src:${externaljarimport}${java.jar.classpath}" srcdir="editor/java" includes="mobl/strategies/**" destdir="${build}" source="1.5" target="1.5" debug="on"/>
   </target>
 
   <target name="moblc-release" depends="moblc">
@@ -93,7 +93,7 @@
         <include name="**/*.class"/>
       </patternset>
     </unzip>
-    <unzip src="utils/js.jar" dest="${compiler-build}" overwrite="no">
+    <unzip src="utils/yuicompressor.jar" dest="${compiler-build}" overwrite="no">
       <patternset>
         <include name="**/*.class"/>
       </patternset>

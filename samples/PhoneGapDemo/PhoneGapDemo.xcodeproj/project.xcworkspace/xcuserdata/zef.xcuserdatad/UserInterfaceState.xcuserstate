@@ -613,7 +613,7 @@
 			</dict>
 		</dict>
 		<string>file://localhost/Users/zef/git/mobl/samples/PhoneGapDemo/PhoneGapDemo.xcodeproj/</string>
-		<real>329921338.75718498</real>
+		<real>329928767.061198</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -809,8 +809,8 @@
 		</dict>
 		<string>IDEDeviceLocation</string>
 		<string>IDEDeviceArchitecture</string>
-		<string>dvtdevice-iphone:c5b4fbf15d08f8a3f2683cbecdfe4f0f7849c144</string>
-		<string>armv7</string>
+		<string>dvtdevice-iphonesimulator:/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.0.sdk-iPhone</string>
+		<string>i386</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -1318,7 +1318,7 @@
 		<string>IDEActiveWorkspaceTabController</string>
 		<string>IDEWindowToolbarIsVisible</string>
 		<string>IDEWindowTabBarIsVisible</string>
-		<string>{{260, 100}, {1400, 952}}</string>
+		<string>{{20, 0}, {1400, 878}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -1488,7 +1488,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>652</real>
+		<real>578</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -1626,7 +1626,7 @@
 		<string>IDESCMStatusFilteringEnabled</string>
 		<string>IDESelectedObjects</string>
 		<string>IDEExpandedItemsSet</string>
-		<string>{{0, 0}, {259, 832}}</string>
+		<string>{{0, 0}, {259, 758}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -2970,7 +2970,7 @@
 				<integer>276</integer>
 			</dict>
 		</dict>
-		<real>329921338.75947201</real>
+		<real>329932409.45954603</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -3046,7 +3046,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{{0, 0}, {1140, 739}}</string>
+		<string>{{0, 0}, {1140, 665}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -3116,7 +3116,7 @@
 			</array>
 		</dict>
 		<string>IDEEditor</string>
-		<real>761</real>
+		<real>687</real>
 		<dict>
 			<key>$class</key>
 			<dict>

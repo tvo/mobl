@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.spoofax.interpreter.core,
  org.strategoxt.strj,
  org.eclipse.osgi
-Bundle-ClassPath: ., utils/js.jar
+Bundle-ClassPath: ., utils/yuicompressor.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: mobl,
   mobl.strategies,

@@ -1,10 +1,45 @@
 application tasks
 
 import mobl::ui::generic
+import mobl::migration
+import migration_generated
 
 entity Task {
-  name : String (searchable)
+  name     : String
+  done     : Bool
+  category : Category
+  tags     : Collection<Tag> (inverse: tasks)
 }
+
+entity Category {
+  tasks : Collection<Task> (inverse: category)
+}
+
+entity Tag {
+  name : String
+  tasks : Collection<Task> (inverse: tags)
+}
+/*
+Migration.defineMigration(1, function(m : Migration) {
+  m.createEntity("tasks::Task");
+  m.addProperty("tasks::Task", "name", "String");
+});
+
+Migration.defineMigration(2, function(m : Migration) {
+  m.addProperty("tasks::Task", "done", "Bool", true);
+});
+
+Migration.defineMigration(3, function(m : Migration) {
+  m.createEntity("tasks::Category");
+  m.addProperty("tasks::Task", "category", "tasks::Category");
+});
+
+Migration.defineMigration(4, function(m : Migration) {
+  m.createEntity("tasks::Tag");
+  m.addProperty("tasks::Tag", "name", "mobl::String");
+  m.addManyToMany("tasks::Task", "tags", "tasks::Tag", "tasks");
+});
+*/
 
 screen addTask() {
   var t = Task()
@@ -28,8 +63,17 @@ screen root() {
   }
   searchBox(phrase)
   group {
-    list(t in Task.searchPrefix(phrase)) {
-      item { label(t.name) }
+    list(t in Task.all()) {
+      item {
+        checkBox(t.done, label=t.name)
+        sideButton("Add tag", onclick={
+          var tag = Tag(name="Piet");
+          t.tags.add(tag);
+        })
+        list(tag in t.tags) {
+          label(tag.name) " "
+        }
+      }
     }
   }
 }

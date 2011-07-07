@@ -13,7 +13,7 @@ builders
   provider : include/mobl.jar
 
   provider : include/mobl-java.jar
-  provider : utils/js.jar
+  provider : utils/yuicompressor.jar
 
   observer : editor-analyze
   on save  : generate-artifacts
@@ -23,6 +23,7 @@ builders
   builder  : "Release build" = editor-optimize
   builder  : "Remove build directories" = editor-clean-project
   builder  : "Rebuild project" = editor-rebuild-project
+  builder  : "Generate init data migration" = editor-derive-migration (openeditor)
 
   //builder		: "Make Data Model Snapshot"	= editor-mobl-make-snapshot
   //builder		: "Derive M3"					= editor-mobl2m3 (openeditor) (realtime) (meta)
