@@ -94,9 +94,9 @@
       </patternset>
     </unzip>
     <unzip src="utils/yuicompressor.jar" dest="${compiler-build}" overwrite="no">
-      <patternset>
-        <include name="**/*.class"/>
-      </patternset>
+      <!--<patternset>
+        <include name="**/*"/>
+      </patternset>-->
     </unzip>
     <jar basedir="${compiler-build}" includes="**" destfile="${strmodule}c.jar">
       <manifest>
