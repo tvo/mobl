@@ -352,10 +352,10 @@ rules
       var [node] = mobl.loadingSpan();
       [root].append([node]);
       var [list];
-      var listSubs__ = new mobl.CompSubscription();
-      subs__.addSub(listSubs__);
+      var [listSubs] = new mobl.CompSubscription();
+      subs__.addSub([listSubs]);
       var [renderList] = function() {
-        var subs__ = listSubs__;
+        var subs__ = [listSubs];
         [list] = [<expression-to-js> e];
         [list].list(function([results]) {
           [node].empty();
@@ -373,8 +373,8 @@ rules
             }());
           }
           mobl.delayedUpdateScrollers();
-          subs__.addSub([list].addEventListener('change', function() { listSubs__.unsubscribe(); [renderList](true); }));
-          subs__.addSub([<ref-expression-to-js> e].addEventListener('change', function() { listSubs__.unsubscribe(); [renderList](true); }));
+          subs__.addSub([list].addEventListener('change', function() { [listSubs].unsubscribe(); [renderList](true); }));
+          subs__.addSub([<ref-expression-to-js> e].addEventListener('change', function() { [listSubs].unsubscribe(); [renderList](true); }));
         });
       };
       [renderList]();
@@ -386,6 +386,7 @@ rules
        ; i := <newname> "i"
        ; renderList := <newname> "renderList"
        ; list := <newname> "list"
+       ; listSubs := <newname> "listSubs"
        ; results := <newname> "results"
        ; vardecls := <map(!$[var [<id>]; ]); concat-strings> <lvalue-vars> lvalue
        ; assigns := <list-assign-lvalue(|results, i)> lvalue//<control-scope(desugar-all); (map(statement-to-js); concat-strings <+ statement-to-js)> Assignment(lvalue, Indexer(Var(results), Var(i)))
