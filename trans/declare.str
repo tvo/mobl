@@ -100,17 +100,18 @@ strategies
 
   declare:
     extern@ExternalScreen(manno*, qid, farg*, rt) -> <fail>
-    where [_, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _))> farg*
+    where [_, _, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _) <+ ?FArgOptional("target", _, _))> farg*
     with rules (
            GetScreen : qid -> extern
          )
 
   declare:
     ExternalScreen(manno*, qid, farg*, rt) -> <fail>
-    where not([_, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _))> farg*)
+    where not([_, _, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _) <+ ?FArgOptional("target", _, _))> farg*)
     with rules (
            GetScreen : qid -> ExternalScreen(manno*, qid, [farg*, FArgOptional("replace", SimpleType(QId("mobl", "Bool")), False()),
-                                                                   FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\""))], rt)
+                                                                  FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\"")),
+                                                                  FArgOptional("target", SimpleType(QId("mobl", "String")), Null())], rt)
          )
 
   declare :
@@ -173,7 +174,8 @@ strategies // convert to externals
   definition-to-external :
     Screen(manno*, qid, farg*, rt, _) -> ExternalScreen(manno*, qid, [farg*, extrafarg*], rt)
     where extrafarg* := [FArgOptional("replace", SimpleType(QId("mobl", "Bool")), False()),
-                         FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\""))]
+                         FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\"")),
+                         FArgOptional("target", SimpleType(QId("mobl", "String")), Null())]
 
   definition-to-external :
     Service(manno*, qid, selem*) -> ExternalType(manno*, qid, SimpleType(QId("mobl", "Object")), <filter(service-elem-to-external)> selem*)

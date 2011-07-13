@@ -131,7 +131,7 @@ rules
     $(function(){
       mobl.initDb(function() {
         $("#mobl-loading").remove();
-        mobl.call("[<qid-to-js> qid].root", $[$mobl.ref(false), mobl.ref("none")$]$, function() {});
+        mobl.call("[<qid-to-js> qid].root", $[$mobl.ref(false), mobl.ref("none"), mobl.ref(null)$]$, function() {});
       });
     });
     </script>
