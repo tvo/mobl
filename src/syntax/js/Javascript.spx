@@ -1,0 +1,179 @@
+package mobltemplatelang
+module jsJavascript
+templates
+  JSModule.JSModule = <<JSStat*; separator="\n">>
+  JSStat.JSVarDeclNoInit = <var <JSID*; separator=", "> ;>
+  JSStat.JSVarDecl = <var <JSID> = <JSExp> ;>
+  JSStat.JSFor = <for(<JSStat> <JSExp> ; <JSExp>) <JSStat>>
+  JSStat.JSForIn = <for(var <JSID> in <JSExp>) <JSStat>>
+  JSStat.JSIf = <if(<JSExp>) <JSStat> else <JSStat>>
+  JSStat.JSIfNoElse = <if(<JSExp>) <JSStat>>
+  JSStat.JSWhile = <while(<JSExp>) <JSStat>>
+  JSStat.JSTryCatch = <try { <JSStat*; separator="\n"> } catch(<JSID>) { <JSStat*; separator="\n"> }>
+  JSStat.JSSwitch = <switch(<JSExp>) { <Case*; separator="\n"> }>
+  Case.JSCase = <case <JSExp> : <JSStat*; separator="\n">>
+  Case.JSDefaultCase = <default : <JSStat*; separator="\n">>
+  JSStat.JSBreak = <break ;>
+  JSStat.JSThrow = <throw <JSExp> ;>
+  JSStat.JSReturn = <return <JSExp> ;>
+  JSStat.JSReturn = <return ;>
+  JSStat.JSDelete = <delete <JSExp> ;>
+  JSStat.JSExpStat = <<JSExp> ;>
+  JSStat.JSBlock = <{ <JSStat*; separator="\n"> }>
+  JSStat.JSFunctionDecl = <function <JSID>(<JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
+  JSStat.JSAsyncFunctionDecl = <function <JSID> ~( <JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
+  JSLVal.JSLFieldAccess = <<JSExp> . <JSID>>
+  JSLVal.JSLVar = <<JSID>>
+  JSLVal.JSLPropAccess = <<JSExp> [<JSExp>]>
+  JSExp.JSRegex = </ <Pattern> / <JSID?>>
+  JSExp.JSStringLit = <<JSSTRING>>
+  JSExp.JSIntLit = <<JSDecimalLiteral>>
+  JSExp.JSIntLit = <<JSHexIntegerLiteral>>
+  VarJSExp.JSVar = <<JSID>>
+  JSExp.JSTrue = <true>
+  JSExp.JSFalse = <false>
+  JSExp.JSThis = <this>
+  JSExp.JSNull = <null>
+  JSExp = <<VarJSExp>>
+  JSExp.JSAssign = <<JSLVal> <JSAssignOp> <JSExp>>
+  JSExp.JSArrayCons = <[<JSExp*; separator=", ">]>
+  JSExp.JSNew = <new <JSExp>(<JSExp*; separator=", ">)>
+  JSExp.JSObj = <{ <JSPropVal*; separator=", "> }>
+  JSPropVal.JSPropVal = <<JSID> : <JSExp>> {prefer}
+  JSPropVal.JSPropVal = <<JSExp> : <JSExp>> {prefer,left}
+  JSExp.JSInc = <<JSExp>++>
+  JSExp.JSDec = <<JSExp>-->
+  JSExp.JSNot = <!<JSExp>>
+  JSExp.JSTypeOf = <typeof <JSExp>>
+  JSExp.JSIn = <<JSExp> in <JSExp>>
+  JSExp.JSChoice = <<JSExp> ? <JSExp> : <JSExp>>
+  JSExp.JSBracket = <(<JSExp>)>
+  JSExp.JSOp = <<JSExp> <JSBoolMethodId> <JSExp>> {left}
+  JSExp.JSOp = <<JSExp> <JSCompareMethodId> <JSExp>> {left}
+  JSExp.JSOp = <<JSExp> <JSTermOperatorMethodId> <JSExp>> {left}
+  JSExp.JSOp = <<JSExp> <JSOperatorMethodId> <JSExp>> {left}
+  JSExp.JSFieldAccess = <<JSExp>.<JSID>>
+  JSExp.JSCall = <<JSExp>(<JSExp*; separator=", ">)>
+  JSExp.JSAsyncCall = <<JSExp> ~(<JSExp*; separator=", ">)>
+  JSExp.JSPropAccess = <<JSExp> <JSIndexerSubscript>>
+  JSIndexerSubscript.JSIndex = <[<JSExp>]>
+  JSExp.JSFunctionExp = <function(<JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
+  JSExp.JSAsyncFunctionExp = <function ~( <JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
+
+context-free priorities
+    {
+      JSExp "." JSID -> JSExp
+      JSExp "(" {JSExp ","}* ")"   -> JSExp
+      JSExp "~(" {JSExp ","}* ")"   -> JSExp
+      JSExp JSIndexerSubscript     -> JSExp
+    }
+  > "!" JSExp         -> JSExp
+  > "typeof" JSExp         -> JSExp
+  > "new" JSExp "(" {JSExp ","}* ")" -> JSExp
+  > {
+      JSExp "++"            -> JSExp
+      JSExp "--"            -> JSExp
+    }
+  > JSExp JSTermOperatorMethodId JSExp -> JSExp
+  > JSExp JSOperatorMethodId JSExp -> JSExp
+  > JSExp JSCompareMethodId JSExp -> JSExp
+  > JSExp JSBoolMethodId JSExp -> JSExp
+
+  > JSExp "?" JSExp ":" JSExp     -> JSExp
+  > JSExp "in" JSExp            -> JSExp
+  > JSLVal JSAssignOp JSExp     -> JSExp
+
+lexical syntax
+
+  "||"                     -> JSBoolMethodId
+  "&&"                     -> JSBoolMethodId
+  "==="                     -> JSCompareMethodId
+  "!=="                     -> JSCompareMethodId
+  "<"                      -> JSCompareMethodId
+  "<="                     -> JSCompareMethodId
+  ">"                      -> JSCompareMethodId
+  ">="                     -> JSCompareMethodId
+  "*"                      -> JSTermOperatorMethodId
+  "/"                      -> JSTermOperatorMethodId
+  "<<"                     -> JSTermOperatorMethodId
+  ">>"                     -> JSTermOperatorMethodId
+  "&"                      -> JSTermOperatorMethodId
+  "|"                      -> JSTermOperatorMethodId
+  "%"                      -> JSTermOperatorMethodId
+  "+"                      -> JSOperatorMethodId
+  "-"                      -> JSOperatorMethodId
+
+  "="                      -> JSAssignOp
+  "+="                     -> JSAssignOp
+  "-="                     -> JSAssignOp
+  "*="                     -> JSAssignOp
+  "%="                     -> JSAssignOp
+
+lexical syntax
+
+  %% Javascript keywords (source: http://www.perlscriptsjavascripts.com/tutorials/javascript/keywords_1.html)
+  "abstract" -> KEYWORD
+  "boolean" -> KEYWORD
+  "break" -> KEYWORD
+  "byte" -> KEYWORD
+  "case" -> KEYWORD
+  "catch" -> KEYWORD
+  "char" -> KEYWORD
+  "class" -> KEYWORD
+  "const" -> KEYWORD
+  "continue" -> KEYWORD
+  "debugger" -> KEYWORD
+  "default" -> KEYWORD
+  "delete" -> KEYWORD
+  "do" -> KEYWORD
+  "double" -> KEYWORD
+  "else" -> KEYWORD
+  "enum" -> KEYWORD
+  "export" -> KEYWORD
+  "extends" -> KEYWORD
+  "false" -> KEYWORD
+  "final" -> KEYWORD
+  "finally" -> KEYWORD
+  "float" -> KEYWORD
+  "for" -> KEYWORD
+  "function" -> KEYWORD
+  "goto" -> KEYWORD
+  "if" -> KEYWORD
+  "implements" -> KEYWORD
+  "import" -> KEYWORD
+  "in" -> KEYWORD
+  "instanceof" -> KEYWORD
+  "int" -> KEYWORD
+  "interface" -> KEYWORD
+  "long" -> KEYWORD
+  "native" -> KEYWORD
+  "new" -> KEYWORD
+  "null" -> KEYWORD
+  "package" -> KEYWORD
+  "private" -> KEYWORD
+  "protected" -> KEYWORD
+  "public" -> KEYWORD
+  "return" -> KEYWORD
+  "short" -> KEYWORD
+  "static" -> KEYWORD
+  "super" -> KEYWORD
+  "switch" -> KEYWORD
+  "synchronized" -> KEYWORD
+  "this" -> KEYWORD
+  "throw" -> KEYWORD
+  "throws" -> KEYWORD
+  "transient" -> KEYWORD
+  "true" -> KEYWORD
+  "try" -> KEYWORD
+  "typeof" -> KEYWORD
+  "var" -> KEYWORD
+  "volatile" -> KEYWORD
+  "while" -> KEYWORD
+  "with" -> KEYWORD
+
+  KEYWORD -> JSID {reject}
+
+lexical restrictions
+
+  "abstract" "boolean" "break" "byte" "case" "catch" "char" "class" "const" "continue" "debugger" "default" "delete" "do" "double" "else" "enum" "export" "extends" "false" "final" "finally" "float" "for" "function" "goto" "if" "implements" "import" "in" "instanceof" "int" "interface" "long" "native" "new" "null" "package" "private" "protected" "public" "return" "short" "static" "super" "switch" "synchronized" "this" "throw" "throws" "transient" "true" "try" "typeof" "var" "volatile" "while" "with"
+-/- [a-zA-Z0-9\_]

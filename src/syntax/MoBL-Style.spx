@@ -1,0 +1,66 @@
+package mobltemplatelang
+module MoBL-Style
+templates
+  Definition.Style = <
+    <MetaAnno*; separator="\n">
+    style <StyleSelector+; separator="\n"> {
+      <StyleElem*; separator="\n">
+    }
+  >
+  Definition.StyleMixin = <
+    <MetaAnno*; separator="\n">
+    style mixin <QId>(<StyleFArg*; separator=", ">) {
+      <StyleElem*; separator="\n">
+    }
+  >
+  StyleFArg.StyleFArg = <$<STYLEID>>
+  Definition.StyleVarDecl = <style <StyleVar> = <StyleExp>>
+  StyleVar.StyleVar = <$<STYLEID>>
+  Definition.ExternalStyle = <
+    <MetaAnno*; separator="\n">
+    external style <StyleSelector+; separator="\n">
+  >
+  StyleElem.StyleProperty = <<STYLEPROPID> : <StyleExpsTL>;>
+  StyleElem.StyleMixinCall = <<QId>(<StyleExps*; separator=", "> );>
+  StyleElem.StyleElemRecover = <<QId>;> {avoid}
+  StyleSelector.StyleSelector = <<QId>>
+  StyleSelector.StyleSelectorWithPseudo = <<QId> : <STYLEPROPID>>
+  StyleSelector.StyleSelectorWithPseudoArg = <<QId> : <STYLEPROPID>(<STYLEPROPID>)>
+  StyleExp.Color = <<COLOR>>
+  StyleExp.StyleId = <<STYLEID>>
+  StyleExp.String = <<STRING>>
+  StyleExp.Num = <<NUMBER>>
+  StyleExp.NumUnit = <<NUMBER> <Unit>>
+  StyleExp.StylePropVal = <<STYLEID> = <StyleExp>>
+  StyleExp = <<StyleVar>>
+  StyleExp.StyleAdd = <<StyleExp> + <StyleExp>> {left}
+  StyleExp.StyleSub = <<StyleExp> ~ <StyleExp>> {left}
+  StyleExp.StyleMul = <<StyleExp> * <StyleExp>> {left}
+  StyleExp.StyleFieldAccess = <<StyleVar> . <ID>>
+  StyleExp.ImportData = <$data(<Path>)>
+  StyleExp.StylePath = <<FILENAME>/<FILENAME+; separator="/">> {avoid}
+  StyleExp.StyleCall = <<STYLEPROPID>(<StyleExps*; separator=", ">)>
+  StyleExps.StyleExps = <<StyleExp+; separator="\n">> {prefer}
+  StyleExpsTL.StyleExpsCS = <<StyleExp+; separator=", ">> {prefer}
+  StyleExpsTL = <<StyleExps>>
+  Unit.PxUnit = <px>
+  Unit.EmUnit = <em>
+  Unit.PtUnit = <pt>
+  Unit.SUnit = <s>
+  Unit.PercentageUnit = <%>
+
+lexical syntax
+  [\#][0-9a-fA-F]* -> COLOR
+  [a-zA-Z\_\-][a-zA-Z0-9\_\-]+ -> STYLEPROPID
+  [a-zA-Z\_][a-zA-Z0-9\_\-]+ -> STYLEID
+
+  "px" -> STYLEID {reject}
+  "em" -> STYLEID {reject}
+  "pt" -> STYLEID {reject}
+  "mixin" -> ID {reject}
+
+lexical restrictions
+
+  STYLEID          -/- [a-zA-Z0-9\_]
+  STYLEPROPID      -/- [a-zA-Z0-9\_]
+  COLOR            -/- [a-zA-Z0-9\_\#]

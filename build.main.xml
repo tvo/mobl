@@ -1,107 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+		
+<project name="MoBLTemplateLang" default="all">
+	
+	<!-- prject directories -->
+  <property name="trans" location="trans"/>
+  <property name="src-gen" location="editor/java"/>
+  <property name="include" location="include"/>
+  <property name="lib" location="lib"/>
+  <property name="build" location="bin"/> 
+  <property name="dist" location="bin/dist"/>
 
-<project name="MoBL" default="all">
-  <!-- Key input modules -->
-  <property name="sdfmodule" value="MoBL" />
-  <property name="esvmodule" value="MoBL" />
-  <property name="strmodule" value="mobl" />
-  <property name="externaljar" value="utils/yuicompressor.jar" />
-  <property name="metasdfmodule" value="Stratego-MoBL"/>
-  <property name="java.jar.enabled" value="true"/>
+	
+	  
+	<!-- Environment configuration for command-line builds -->
+  <property name="build.sdf.imports" value= "-I &quot;${basedir}&quot; "/>
+  <property name="build.stratego.args" value="
+                  --library
+                  -I &quot;${basedir}&quot;
+                  -la stratego-lib -la stratego-sglr -la stratego-gpp -la stratego-xtc -la stratego-aterm  -la strc -la stratego-sdf"/>
 
-  <!-- Project directories -->
-  <property name="trans" location="trans" />
-  <property name="src-gen" location="editor/java" />
-  <property name="syntax" location="syntax" />
-  <property name="include" location="include" />
-  <property name="lib" location="lib" />
-  <property name="build" location="bin" />
-  <property name="dist" location="bin/dist" />
-  <property name="compiler-build" location="compiler/bin" />
-  <property name="compiler-src-gen" location="compiler/src" />
-  <!--<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>-->
-
-  <!-- Imports -->
-  <property name="build.sdf.imports" value="" />
-  <property name="build.stratego.args" value="--library
-                        -I &quot;${trans}&quot; -I &quot;${basedir}&quot;
-                        -la stratego-lib -la stratego-sglr -la stratego-gpp -la stratego-xtc -la stratego-aterm" />
-
-  <property name="build.moblc.args" value="-I &quot;${trans}&quot; -I &quot;${basedir}&quot;
-    -la stratego-tool-doc
-                        -la stratego-lib -la stratego-sglr -la stratego-gpp -la stratego-xtc -la stratego-aterm" />
-
-  <!-- External .def and .jar locations
-        <property name="externaldef" location="syntax/${sdfmodule}.def"/>
-        <property name="externaljar" value="../lib.jar"/>
-        <property name="externaljarflags" value="-la org.lib"/>
-        -->
-
-  <!-- Environment configuration for command-line builds -->
   <condition property="build.strategoxt.sdf" value="${eclipse.spoofaximp.nativeprefix}" else="">
-    <isset property="eclipse.spoofaximp.nativeprefix" />
+  	<isset property="eclipse.spoofaximp.nativeprefix"/>
   </condition>
-  <property name="build.strategoxt.stratego" location="${user.home}/.nix-profile/bin" />
-
-  <import file="build.generated.xml" />
-
+  
+  <property name="build.strategoxt.stratego" location="${user.home}/.nix-profile/bin"/>
+  <import file=".build/build.spx.main.generated.xml"/>
+  
+  <!-- Compiles and Generates Artefacts. Internally it calls build-spoofaxlang-jvm strategy -->
+ 	<target name="buildinit">
+  	<java classname="org.strategoxt.imp.metatooling.building.AntSpxGenerateArtefacts" failonerror="true">
+		 	<arg value="${basedir}"/>
+	  </java>
+  </target>
+	
   <!-- Main target -->
-  <!--<target name="all-interpreter" depends="meta-sdf2table,sdf2table,ppgen,pppack,stratego.aster,stratego.ctree,sdf2imp,refresh" />-->
-  <target name="all-interpreter" depends="check-classpath,meta-sdf2table,sdf2table,ppgen,pppack,stratego.aster,stratego.ctree,java.jar,sdf2imp,refresh" />
-  <target name="all" depends="check-classpath,meta-sdf2table,compile-java-strategies,sdf2table,ppgen,pppack,stratego.aster,stratego.jar,java.jar,sdf2imp,refresh" />
-
-  <!-- Stratego to Java compiler -->
-  <target name="moblc" depends="check-classpath,meta-sdf2table,sdf2table,ppgen,pppack,sdf2imp,compile-java-strategies,java.jar,rtg2sig">
-    <mkdir dir="${compiler-src-gen}/trans"/>
-    <java classname="org.strategoxt.strj.Main" classpath="utils/strategoxt.jar" failonerror="true" maxmemory="1024m" fork="true">
-        <arg value="-i"/>
-        <arg value="${trans}/${strmodule}c.str"/>
-        <arg value="-o"/>
-        <arg value="${compiler-src-gen}/trans/Main.java"/>
-        <arg value="-p"/>
-        <arg value="trans"/>
-        <arg value="--clean"/>
-        <arg line="${java.jar.import}"/>
-        <arg line="${build.moblc.args}"/>
-        <arg line="${externaljarflags}"/>
-        <arg line="${externaldefimport}"/>
-        <arg line="-I &quot;${lib}&quot; -I &quot;${include}&quot;  --cache-dir &quot;${basedir}/.cache&quot;"/>
-        <jvmarg value="-ss16m"/>
-        <jvmarg value="-Xss16m"/>
-    </java>
-    <mkdir dir="${compiler-build}"/>
-    <javac classpath="utils/strategoxt.jar:java-src:${externaljarimport}${java.jar.classpath}" srcdir="${compiler-src-gen}" includes="trans/**" destdir="${compiler-build}" source="1.5" target="1.5" debug="on"/>
-    <!-- copy imported terms -->
-    <copy todir="${compiler-build}/trans">
-        <fileset dir="${compiler-src-gen}/trans" excludes="**/*.java"/>
-    </copy>
-    <jar basedir="${compiler-build}" includes="trans/**" destfile="${strmodule}c-small.jar"/>
-  </target>
-
-  <target name="compile-java-strategies">
-    <javac classpath="utils/strategoxt.jar:utils/yuicompressor.jar:java-src:${externaljarimport}${java.jar.classpath}" srcdir="editor/java" includes="mobl/strategies/**" destdir="${build}" source="1.5" target="1.5" debug="on"/>
-  </target>
-
-  <target name="moblc-release" depends="moblc">
-    <unzip src="utils/strategoxt.jar" dest="${compiler-build}" overwrite="no">
-      <patternset>
-        <include name="**/*.class"/>
-      </patternset>
-    </unzip>
-    <unzip src="include/mobl-java.jar" dest="${compiler-build}" overwrite="no">
-      <patternset>
-        <include name="**/*.class"/>
-      </patternset>
-    </unzip>
-    <unzip src="utils/yuicompressor.jar" dest="${compiler-build}" overwrite="no">
-      <!--<patternset>
-        <include name="**/*"/>
-      </patternset>-->
-    </unzip>
-    <jar basedir="${compiler-build}" includes="**" destfile="${strmodule}c.jar">
-      <manifest>
-        <attribute name="Main-Class" value="trans.Main"/>
-      </manifest>
-    </jar>
-  </target>
+  <target name="all" depends="buildinit,build-spx-packages"/>
 </project>

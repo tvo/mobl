@@ -1,0 +1,100 @@
+package mobltemplatelang
+module MoBL-UI
+templates
+  Definition.ScreenNoReturnType = <
+    <MetaAnno*; separator="\n">
+    screen <QId>(<FArg*; separator=", ">) {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  Definition.Screen = <
+    <MetaAnno*; separator="\n">
+    screen <QId>(<FArg*; separator=", ">) : <Type> {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ControlDefinition.Control = <
+    <MetaAnno*; separator="\n">
+    control <QId>(<FArg*; separator=", ">) {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ControlDefinition.Control = <
+    <MetaAnno*; separator="\n">
+    template <QId>(<FArg*; separator=", ">) {
+      <ScreenElem*; separator="\n">
+    }
+  > {deprecated("the 'template' keyword has been replaced with 'control'.")}
+  ControlSig.ControlSig = <<ID>(<FArg*; separator=", ">)>
+  Definition = <<ControlDefinition>>
+  ScreenElem.Html = [
+    <[HTMLID] [HtmlArg*]>
+      [ScreenElem*]
+    </[HTMLID]>
+  ]
+  ScreenElem.HtmlShort = [<[HTMLID] [HtmlArg*] />]
+  ScreenElem.NamedHtml = [
+    [ID] @ <[HTMLID] [HtmlArg*]>
+      [ScreenElem*]
+    </[HTMLID]>
+  ]
+  ScreenElem.NamedHtmlShort = [[ID] @ <[HTMLID] [HtmlArg*] />]
+  HtmlArg.HtmlArg = <<HTMLID> = <Exp>>
+  HtmlArg.HtmlDatabindArg = <databind = <Exp>>
+  ScreenElem = <<ControlDefinition>>
+  ScreenElem.VarDecl = <var <ID> : <Type> = <Exp>>
+  ScreenElem.VarDeclInferred = <var <ID> = <Exp>>
+  ScreenElem.DeriveDecl = [var [ID] : [Type] <- [Exp]]
+  ScreenElem.DeriveDeclInferred = [var [ID] <- [Exp]]
+  ScreenElem = <<FunctionDef>>
+  ScreenElem.Script = <
+    script {
+      <Statement*; separator="\n">
+    }
+  >
+  ScreenElem.Script = <
+    init {
+      <Statement*; separator="\n">
+    }
+  > {deprecated("Please use 'script' instead.")}
+  ScreenElem.ScreenString = <<STRING>>
+  ScreenElem.List = <
+    list(<LValue> : <Type> in <Exp>) {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ScreenElem.ListInferred = <
+    list(<LValue> in <Exp>) {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ScreenElem.When = <
+    when(<Exp>) {
+      <ScreenElem*; separator="\n">
+    } else {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ScreenElem.WhenNoElse = <
+    when(<Exp>) {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ScreenElem.WhenNoElse = <
+    cond(<Exp>) {
+      <ScreenElem*; separator="\n">
+    }
+  > {deprecated("Please use when instead, same syntax, different keyword")}
+  ScreenElem.ScreenVarDecl = <var <ID> : <Type> = <Exp>>
+  ScreenElem.ControlCall = <
+    <LimitedExp>(<NamedExp*; separator=", ">) {
+      <ScreenElem*; separator="\n">
+    }
+  > {prefer}
+  ScreenElem.ControlCallNoBody = <<LimitedExp>(<NamedExp*; separator=", ">)>
+  ScreenElem.ControlCallNoArgs = <
+    <LimitedExp> {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  ScreenElem = <<Exp>.<ID>(<NamedExp*; separator=", ">)> {reject}

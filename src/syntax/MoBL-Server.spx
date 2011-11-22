@@ -1,0 +1,25 @@
+package mobltemplatelang
+module MoBL-Server
+templates
+  Start.ServerApplication = <
+    server <ID>
+
+    <ServerSetting*; separator="\n">
+
+    <Definition*; separator="\n">
+  >
+  ServerSetting.DatabaseSetting = <
+    database
+      host <STRING>
+      name <STRING>
+      username <STRING>
+      password <STRING>
+  >
+  ServerSetting.DebugSetting = <debug>
+  MetaAnno.ServiceAnno = <@service <HttpMethod> <UriPath>>
+  MetaAnno.SocketEventAnno = <@socketevent(<STRING>)>
+  HttpMethod.GetMethod = <GET>
+  HttpMethod.PostMethod = <POST>
+  HttpMethod.PutMethod = <PUT>
+  HttpMethod.DeleteMethod = <DELETE>
+  Definition.MiddlewareUse = <middleware <Exp>>

@@ -1,0 +1,85 @@
+package mobltemplatelang
+module MoBL
+
+context-free start-symbols
+  Start
+
+templates
+  QId = <<ID>>
+  QId.QId = <<QId>::<ID>>
+  Start.Module = <
+    module <QId>
+
+    <Definition*; separator="\n">
+  >
+  Start.Application = <
+    application <ID>
+
+    <Definition*; separator="\n">
+  >
+  Definition.DynamicImport = <dynamic import <QId>>
+  Definition.Import = <import <QId>>
+  Definition.Load = <load <Path>>
+  Definition.Resource = <resource <Path>>
+  Definition.Mixin = <mixin <QId>>
+  FArg.FArg = <<ID> : <Type>>
+  FArg.FArgOptional = <<ID> : <Type> = <Exp>>
+  NFType.SimpleType = <<QId>>
+  NFType.GenericType = [[QId]<[Type*; separator=", "]>]
+  NFType.TupleType = <(<Type*; separator=", ">)>
+  NFType.ArrayType = <[<Type>]>
+  NFType.DynamicType = <?>
+  Type = <<NFType>>
+  Type.FunctionType = [[NFType+; separator=" * "] -> [NFType]] {avoid}
+  MetaAnno.DocAnno = <@doc <STRING>>
+  MetaAnno.WhenAnno = <@when <Exp>>
+  MetaAnno.PersistableAnno = <@persistable>
+  MetaAnno.DecoratorAnno = <@<Exp>> {avoid}
+  Path.Path = <<FILENAME+; separator="/">>
+  Path.AbsolutePath = </<FILENAME+; separator="/">>
+  Path.QuotedPath = <<STRING>>
+  Definition.Javascript = [
+    <javascript>
+      [JSModule]
+    </javascript>
+  ]
+  Definition.ModuleJavascript = [
+    [QId] @<javascript>
+      [JSModule]
+    </javascript>
+  ]
+  Definition.JavascriptFor = [
+    <javascript for=[QId]>
+      [JSModule]
+    </javascript>
+  ]
+  Definition.ModuleJavascriptFor = [
+    [QId] @<javascript for=[QId]>
+      [JSModule]
+    </javascript>
+  ]
+  UriPath.UriPath = </<UriPart*; separator="/">>
+  UriPart.UriPart = <<FILENAME>>
+  UriPart.UriVar = <:<ID>>
+
+lexical syntax
+  "control" -> ID {reject}
+  "var" -> ID {reject}
+  "script" -> ID {reject}
+  "screen" -> ID {reject}
+  "entity" -> ID {reject}
+  "function" -> ID {reject}
+  "callback" -> ID {reject}
+  %%"sync" -> ID {reject}
+  "null" -> ID {reject}
+  "return" -> ID {reject}
+  "true" -> ID {reject}
+  "false" -> ID {reject}
+  "if" -> ID {reject}
+  "else" -> ID {reject}
+  "databind" -> HTMLID {reject}
+  "cond" -> ID {reject}
+  "when" -> ID {reject}
+  "this" -> ID {reject}
+  "javascript" -> ID {reject}
+  "$data" -> ID {reject}

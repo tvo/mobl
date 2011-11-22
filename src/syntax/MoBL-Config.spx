@@ -1,0 +1,21 @@
+package mobltemplatelang
+module MoBL-Config
+templates
+  Start.Configuration = <
+    configuration
+
+    <Setting*; separator="\n">
+  >
+  Setting.TitleSetting = <title <STRING>>
+  Setting.DatabaseSetting = <database <STRING>>
+  Setting.IconSetting = <icon <Path>>
+  Setting.VersionSetting = <version <STRING>>
+  Setting.StdLibSetting = <stdlib <Path>>
+  Setting.LibSetting = <lib <Path>>
+  Setting.HtmlSetting = <html <FILENAME>>
+  Setting.OutputSetting = <output <STRING>>
+  Setting.ReleaseOutputSetting = <release output <STRING>>
+  Setting.OfflineSetting = <offline>
+  Setting.DebugSetting = <debug>
+  Setting.LoadingHtmlSetting = <loadingHTML <STRING>>
+  Setting.StyleVarSetting = <style <StyleVar> = <StyleExp>>

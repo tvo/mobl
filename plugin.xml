@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-
 <plugin>
-    <extension point="org.eclipse.imp.runtime.languageDescription">
-        <language extensions="mobl" description="MoBL" language="MoBL" derivedFrom="DynamicRoot" validator="mobl.MoBLValidator" validatorClass="mobl.MoBLValidator">
-        </language>
-    </extension>
-    <extension id="mobl.parser" name="MoBL Parser" point="org.eclipse.imp.runtime.parser">
-        <parser class="mobl.MoBLParseController" language="MoBL">
-        </parser>
-    </extension>
-    <extension point="org.eclipse.ui.newWizards">
-        <primaryWizard id="mobl.EditorWizard"/>
-        <wizard
-         class="mobl.MoblEditorWizard"
-         icon="icons/mobl.png"
-         id="mobl.EditorWizard"
-         name="mobl project"
-         project="true">
-        </wizard>
-    </extension>
+   <extension
+         point="org.eclipse.imp.runtime.languageDescription">
+      <language
+            extensions="mobl"
+            description="MoBLTemplateLang"
+            language="MoBLTemplateLang"
+            derivedFrom="DynamicRoot"
+            validator="mobltemplatelang.MoBLTemplateLangValidator"
+            validatorClass="mobltemplatelang.MoBLTemplateLangValidator"
+      ></language>
+   </extension>
+   <extension
+         id="mobltemplatelang.parser"
+         name="MoBLTemplateLang Parser"
+         point="org.eclipse.imp.runtime.parser">
+      <parser
+            class="mobltemplatelang.MoBLTemplateLangParseController"
+            language="MoBLTemplateLang">
+      </parser>
+   </extension>    
 </plugin>

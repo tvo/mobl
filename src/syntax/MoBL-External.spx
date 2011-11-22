@@ -1,0 +1,67 @@
+package mobltemplatelang
+module MoBL-External
+templates
+  Definition.ExternalTypeNoSuper = <
+    <MetaAnno*; separator="\n">
+    external type <QId> {
+      <ExternalMemberDecl*; separator="\n">
+    }
+  >
+  Definition.ExternalType = <
+    <MetaAnno*; separator="\n">
+    external type <QId> : <Type> {
+      <ExternalMemberDecl*; separator="\n">
+    }
+  >
+  Definition.ExternalGenericType = [
+    [MetaAnno*]
+    external type [QId]<[ID*; separator=", "]> {
+      [ExternalMemberDecl*]
+    }
+  ]
+  ExternalMemberDecl.ExternalStaticMethod = <
+    <MetaAnno*; separator="\n">
+    static function <ID>(<FArg*; separator=", ">) : <Type>
+  >
+  ExternalMemberDecl.ExternalMethod = <
+    <MetaAnno*; separator="\n">
+    function <ID>(<FArg*; separator=", ">) : <Type>
+  >
+  ExternalMemberDecl.ExternalStaticSyncMethod = <
+    <MetaAnno*; separator="\n">
+    static sync function <ID>(<FArg*; separator=", ">) : <Type>
+  >
+  ExternalMemberDecl.ExternalSyncMethod = <
+    <MetaAnno*; separator="\n">
+    sync function <ID>(<FArg*; separator=", ">) : <Type>
+  >
+  ExternalMemberDecl = <<EntityBodyDecl>>
+  Definition.ExternalControl = <
+    <MetaAnno*; separator="\n">
+    external control <QId>(<FArg*; separator=", "> )
+  >
+  Definition.ExternalScreen = <
+    <MetaAnno*; separator="\n">
+    external screen <QId>(<FArg*; separator=", ">) : <Type>
+  >
+  Definition.ExternalEntity = <
+    <MetaAnno*; separator="\n">
+    external entity <QId> : <Type> {
+      <EntityBodyDecl*; separator="\n">
+    }
+  >
+  Definition.ExternalFunction = <
+    <MetaAnno*; separator="\n">
+    external function <QId>(<FArg*; separator=", ">) : <Type>
+  >
+  Definition.ExternalSyncFunction = <
+    <MetaAnno*; separator="\n">
+    external sync function <QId>(<FArg*; separator=", ">) : <Type>
+  >
+  Definition.ExternalVarDecl = <
+    external var <QId> : <Type>;
+  >
+  Definition.ExternalControl = <
+    <MetaAnno*; separator="\n">
+    external template <QId>(<FArg*; separator=", "> )
+  > {deprecated("The 'template' keyword has been replaced with 'control'.")}

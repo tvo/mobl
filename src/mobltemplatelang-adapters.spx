@@ -1,0 +1,31 @@
+package mobltemplatelang   
+// This module acts as adapter between editor services and respective custom transformations. 
+	// It specifies Stratego transformation rules to be executed for different types of editor services. 
+	// See editor-services.generated.spx for a brief introduction on the available editor services.
+	module MoBLTemplateLang-MainAdapters
+					
+		// Builders may carry out custom transformations on a file or selection.
+		builders
+			observer : editor-analyze         	                                                                          
+	  
+			builder  : "Show abstract syntax (for selection)" = generate-aterm (openeditor) (realtime) (meta) (source)
+			builder  : "Pretty-printing (for selection)"      = prettyprint-selection (openeditor) (realtime)
+
+			// on save: generate-java
+						
+module Builders  
+	 	
+rules 
+	// Prints the abstract syntax ATerm of a selection.
+	generate-aterm:
+		(selected, position, ast, path, project-path) -> (filename, result)
+		with
+			filename := <guarantee-extension(|"aterm")> path;
+			result   := selected // we just return the input term
+	
+	// Prints the abstract syntax ATerm of a selection.
+	prettyprint-selection:
+		(selected, position, ast, path, project-path) -> (filename, result)
+		with
+			filename := <guarantee-extension(|"pp.mobl")> path;
+			result   := <prettyprint-MoBLTemplateLang>selected // we just return the input term

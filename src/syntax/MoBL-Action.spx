@@ -1,0 +1,231 @@
+package mobltemplatelang
+module MoBL-Action
+templates
+  FunctionDef.Function = <
+    <MetaAnno*; separator="\n">
+    function <QId>(<FArg*; separator=", ">) : <Type> {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.FunctionNoReturnType = <
+    <MetaAnno*; separator="\n">
+    function <QId>(<FArg*; separator=", ">) {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.SyncFunction = <
+    <MetaAnno*; separator="\n">
+    sync function <QId>(<FArg*; separator=", ">) : <Type> {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.SyncFunctionNoReturnType = <
+    <MetaAnno*; separator="\n">
+    sync function <QId>(<FArg*; separator=", ">) {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.StaticFunction = <
+    <MetaAnno*; separator="\n">
+    static function <QId>(<FArg*; separator=", ">) : <Type> {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.StaticFunctionNoReturnType = <
+    <MetaAnno*; separator="\n">
+    static function <QId>(<FArg*; separator=", ">) {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.StaticSyncFunction = <
+    <MetaAnno*; separator="\n">
+    static sync function <QId>(<FArg*; separator=", ">) : <Type> {
+      <Statement*; separator="\n">
+    }
+  >
+  FunctionDef.StaticSyncFunctionNoReturnType = <
+    <MetaAnno*; separator="\n">
+    static sync function <QId>(<FArg*; separator=", ">) {
+      <Statement*; separator="\n">
+    }
+  >
+  Definition = <<Statement>>
+  Statement.VarDecl = <var <ID; text="x"> : <Type> = <Exp>;>
+  Statement.VarDeclInferred = <var <ID; text="x"> = <Exp>;>
+  Statement.Assignment = <<LValue> = <Exp>;>
+  LValue = <<QId>>
+  LValue.LFieldAccess = <<Exp>.<ID>>
+  LValue.LTuple = <(<LValue>, <LValue*; separator=", ">)>
+  LValue.LIndexer = <<Exp>[<Exp>]> {left}
+  Statement.ExpStat = <<Exp>;>
+  Statement.If = <
+    <If>
+    <Else>
+  >
+  Statement.IfNoElse = <
+    <If>
+  >
+  If.If = <
+    if(<Exp>) <Statement>
+  >
+  Else.Else = <
+    else <Statement>
+  >
+  Statement.For = <
+    foreach(<LValue> : <Type> in <Exp>) {
+      <Statement*; separator="\n">
+    }
+  >
+  Statement.ForInferred = <
+    foreach(<LValue> in <Exp>) {
+      <Statement*; separator="\n">
+    }
+  >
+  Statement.While = <
+    while(<Exp>) {
+      <Statement*; separator="\n">
+    }
+  >
+  Statement.Block = <
+    {
+      <Statement*; separator="\n">
+    }
+  >
+  Statement.For = <
+    for(<LValue> : <Type> in <Exp>) {
+      <Statement*; separator="\n">
+    }
+  > {deprecated("To avoid confusing Javascript programmers, for(... in ...) is now foreach(... in ...)")}
+  Statement.ForInferred = <
+    for(<LValue> in <Exp>) {
+      <Statement*; separator="\n">
+    }
+  > {deprecated("To avoid confusing Javascript programmers, for(... in ...) is now foreach(... in ...)")}
+  Statement.Return = <return <Exp>;>
+  Statement.ScreenReturn = <screen return <Exp>;>
+  Statement.Return = <return;>
+  Statement.ScreenReturn = <screen return;>
+  Statement.Async = <
+    async {
+      <Statement*; separator="\n">
+    }
+  >
+  Statement = <<FunctionDef>>
+  LimitedSetExp.String = <<STRING>>
+  LimitedSetExp.Num = <<NUMBER>>
+  LimitedSetExp.True = <true>
+  LimitedSetExp.False = <false>
+  LimitedSetExp.Null = <null>
+  LimitedSetExp.This = <this>
+  Exp.Not = <!<Exp>>
+  Exp = <<LimitedSetExp>>
+  LimitedExp.Call = <<QId>(<NamedExp*; separator=", ">)>
+  LimitedExp.Var = <<QId>>
+  LimitedExp.Brackets = <(<Exp>)>
+  LimitedExp.MethodCall = <<Exp>.<ID>(<NamedExp*; separator=", ">)>
+  LimitedExp.FieldAccess = <<Exp>.<ID>>
+  LimitedExp.Indexer = <<Exp>[<Exp>]> {left}
+  LimitedSetExp = <<LimitedExp>> {completion(prefer)} // guide completion templates towards ID
+  NamedExp = <<Exp>>
+  NamedExp.NamedExp = <<ID> = <Exp>>
+  Exp.BinMethodCall = <<Exp> <BoolMethodId> <Exp>> {left}
+  Exp.BinMethodCall = <<Exp> <CompareMethodId> <Exp>> {left}
+  Exp.BinMethodCall = <<Exp> <TermOperatorMethodId> <Exp>> {left}
+  Exp.BinMethodCall = <<Exp> <OperatorMethodId> <Exp>> {left}
+  Exp.Choice = <<Exp> ? <Exp> : <Exp>> {left}
+  Exp.CollectionCons = [[QId]<[Type*; separator=", "]>([Exp*; separator=", "] )] {prefer}
+  Exp.EntityCons = <<Type> { <PropVal*; separator=", "> }> {deprecated("Please use the SomeEntity(name=...) syntax instead")}
+  Exp.List = <[<Exp*; separator=", ">]>
+  Exp.Tuple = <(<Exp>, <Exp*; separator=", ">)>
+  Exp.AsyncCall = <async(<Exp*; separator=", ">)> {prefer}
+  Exp.Callback = <
+    {
+      <Statement*; separator="\n">
+    }
+  >
+  Exp.AnonymousControl = <
+    control(<FArg*; separator=", ">) {
+      <ScreenElem*; separator="\n">
+    }
+  >
+  Exp.AnonymousFunctionNoReturnType = <
+    function(<FArg*; separator=", ">) {
+      <Statement*; separator="\n">
+    }
+  >
+  Exp.AnonymousFunction = <
+    function(<FArg*; separator=", ">) : <Type> {
+      <Statement*; separator="\n">
+    }
+  >
+  PropVal.PropVal = <<ID> = <Exp>>
+  Exp.ImportData = <$data(<Path>)>
+  Exp.SetComp = <
+    <LimitedExp>
+    <Filter+; separator="\n">
+  >
+  Filter.WhereFilter = <where <SetExp>>
+  Filter.OrderByFilter = <order by <OrderExp>>
+  Filter.PrefetchFilter = <prefetch <ID+; separator=", ">>
+  Filter.LimitFilter = <limit <Exp>>
+  Filter.OffsetFilter = <offset <Exp>>
+  OrderExp.OrderNonSpecific = <<ID>>
+  OrderExp.OrderAscending = <<ID> asc>
+  OrderExp.OrderDescending = <<ID> desc>
+  SetExp.SetEq = <<ID> == <LimitedSetExp>>
+  SetExp.SetNotEq = <<ID> != <LimitedSetExp>>
+  SetExp.SetLt = [[ID] < [LimitedSetExp]]
+  SetExp.SetLeq = [[ID] <= [LimitedSetExp]]
+  SetExp.SetGt = [[ID] > [LimitedSetExp]]
+  SetExp.SetGeq = [[ID] >= [LimitedSetExp]]
+  SetExp.SetIn = <<ID> in <LimitedSetExp>>
+  SetExp.SetNotIn = <<ID> not in <LimitedSetExp>>
+  SetExp.SetAnd = <<SetExp> && <SetExp>> {left,prefer}
+
+context-free priorities
+    Exp "." ID -> LimitedExp
+  > Exp "." ID "(" {NamedExp ","}* ")" -> LimitedExp
+  > Exp TermOperatorMethodId Exp -> Exp
+  > Exp OperatorMethodId Exp -> Exp
+  > Exp CompareMethodId Exp -> Exp
+  > Exp BoolMethodId Exp -> Exp
+  > "!" Exp -> Exp
+  > Exp "?" Exp ":" Exp -> Exp
+  > LimitedExp Filter+ -> Exp
+
+context-free priorities
+  {
+    ID "==" LimitedSetExp                        -> SetExp
+    ID "!=" LimitedSetExp                        -> SetExp
+    ID "<" LimitedSetExp                         -> SetExp
+    ID "<=" LimitedSetExp                        -> SetExp
+    ID ">" LimitedSetExp                         -> SetExp
+    ID ">=" LimitedSetExp                        -> SetExp
+  }
+  > SetExp "&&" SetExp                 -> SetExp
+
+lexical syntax
+  "||"                     -> BoolMethodId
+  "&&"                     -> BoolMethodId
+  "=="                     -> CompareMethodId
+  "!="                     -> CompareMethodId
+  "<"                      -> CompareMethodId
+  "<="                     -> CompareMethodId
+  ">"                      -> CompareMethodId
+  ">="                     -> CompareMethodId
+  "*"                      -> TermOperatorMethodId
+  "/"                      -> TermOperatorMethodId
+  "<<"                     -> TermOperatorMethodId
+  ">>"                     -> TermOperatorMethodId
+  "&"                      -> TermOperatorMethodId
+  "|"                      -> TermOperatorMethodId
+  "%"                      -> TermOperatorMethodId
+  "+"                      -> OperatorMethodId
+  "-"                      -> OperatorMethodId
+  "++"                     -> PostFixId
+  "--"                     -> PostFixId
+  BoolMethodId             -> MethodId
+  CompareMethodId          -> MethodId
+  TermOperatorMethodId     -> MethodId
+  OperatorMethodId         -> MethodId
+  PostFixId                -> MethodId

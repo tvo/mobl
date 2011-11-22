@@ -1,0 +1,178 @@
+package mobltemplatelang
+module MoBL-Regex
+templates
+  Exp.RegExp = </ <Pattern> / <Modifiers>>
+  Pattern.SingleBranch = <<Branche>>
+  Pattern.TupleBranch = <<Pattern> | <Pattern>> {right,prefer}
+  Branche.Pieces = <<Piece+>>
+  Piece.SingleAtom = <<Atom>>
+  Piece.QuantifiedAtom = <<Atom> <Quantifier>>
+  Quantifier.GreedyExactBound = <{ <Integer> }>
+  Quantifier.GreedyLowerBound = <{ <Integer> , }>
+  Quantifier.GreedyLowerUpperBound = <{ <Integer> , <Integer> }>
+  Quantifier.GreedyOnceOrNot = <?>
+  Quantifier.GreedyZeroOrMore = <*>
+  Quantifier.GreedyOneOrMore = <+>
+  Quantifier.ReluctantExactBound = <{ <Integer> }?>
+  Quantifier.ReluctantLowerBound = <{ <Integer> , }?>
+  Quantifier.ReluctantLowerUpperBound = <{ <Integer> , <Integer> }?>
+  Quantifier.ReluctantOnceOrNot = <??>
+  Quantifier.ReluctantZeroOrMore = <*?>
+  Quantifier.ReluctantOneOrMore = <+?>
+  Quantifier.PossessiveExactBound = <{ <Integer> }+>
+  Quantifier.PossessiveLowerBound = <{ <Integer> , }+>
+  Quantifier.PossessiveLowerUpperBound = <{ <Integer> , <Integer> }+>
+  Quantifier.PossessiveOnceOrNot = <?+>
+  Quantifier.PossessiveZeroOrMore = <*+>
+  Quantifier.PossessiveOneOrMore = <++>
+  Atom.Capture = <(<Pattern>)>
+  Atom.NonCapture = <(?: <Pattern>)>
+  Atom.PositiveLookahead = <(?= <Pattern>)>
+  Atom.NegativeLookahead = <(?! <Pattern>)>
+  Atom.PositiveLookbehind = [(?<= [Pattern] )]
+  Atom.NegativeLookbehind = [(?<! [Pattern] )]
+  Atom.PythonCapture = [(?P< [RegexId] > [Pattern] )]
+  Atom.RegexCapture = <(<Pattern> )@{ <RegexId> }>
+  Atom.Empty = <()>
+  Atom.SingleCharacter = <.>
+  Atom.LineStart = <^>
+  Atom.LineEnd = <$>
+  Atom.CharacterClass = <<CharacterClass>>
+  Atom.AtomLiteral = <<AtomLiteral>>
+  Atom.AtomCharacter = <<AtomCharacter>>
+  Atom.QuotedAtom = <\\Q <AllChars> \\E>
+  CharacterClass.BracketList = <[<BracketItem+>]>
+  CharacterClass.NegatedBracketList = <[^<BracketItem+>]>
+
+  // TVO - manual conversion because of alt in SDF
+  BracketLiteralOrCharacter = <<BracketLiteral>>
+  BracketLiteralOrCharacter = <<BracketCharacter>>
+  BracketItem.Range = <<BracketLiteralOrCharacter> - <BracketLiteralOrCharacter>>
+
+  BracketItem.Union = <<CharacterClass>>
+  BracketItem.BracketLiteral = <<BracketLiteral>>
+  BracketItem.BracketCharacter = <<BracketCharacter>>
+  ClassKeyword.LowerClass = <Lower>
+  ClassKeyword.UpperClass = <Upper>
+  ClassKeyword.ASCIIClass = <ASCII>
+  ClassKeyword.AlphaClass = <Alpha>
+  ClassKeyword.DigitClass = <Digit>
+  ClassKeyword.AlnumClass = <Alnum>
+  ClassKeyword.PunctClass = <Punct>
+  ClassKeyword.GraphClass = <Graph>
+  ClassKeyword.PrintClass = <Print>
+  ClassKeyword.BlankClass = <Blank>
+  ClassKeyword.CntrlClass = <Cntrl>
+  ClassKeyword.XDigitClass = <XDigit>
+  ClassKeyword.WhiteSpace = <Space>
+  ClassKeyword.JavaIsLowerCase = <javaLowerCase>
+  ClassKeyword.JavaIsLowerCase = <javaUpperCase>
+  ClassKeyword.JavaIsWhitespace = <javaWhitespace>
+  ClassKeyword.JavaIsMirrored = <javaMirrored>
+  ClassKeyword.GreekBlock = <InGreek>
+  ClassKeyword.UppercaseLetter = <Lu>
+  ClassKeyword.CurrencySymbol = <Sc>
+  BracketCharacter.DoubleQuote = <\">
+  AtomCharacter.DoubleQuote = <\">
+  BracketCharacter.OctalChar = <\\0 <OctalValue>>
+  BracketCharacter.HexHexChar = <\\x <TwoHexValue>>
+  BracketCharacter.DecHexChar = <\\u <FourHexValue>>
+  BracketCharacter.Tab = <\\t>
+  BracketCharacter.Newline = <\\n>
+  BracketCharacter.Return = <\\r>
+  BracketCharacter.Formfeed = <\\f>
+  BracketCharacter.Alarm = <\\a>
+  BracketCharacter.Escape = <\\e>
+  BracketCharacter.WordChar = <\\w>
+  BracketCharacter.NonWordChar = <\\W>
+  BracketCharacter.WhiteSpaceChar = <\\s>
+  BracketCharacter.NonWhiteSpaceChar = <\\S>
+  BracketCharacter.DigitChar = <\\d>
+  BracketCharacter.NonDigitChar = <\\D>
+  BracketCharacter.ControlCharacter = <\\c <ControlValue>>
+  BracketCharacter.WordBoundry = <\\b>
+  BracketCharacter.NonWordBoundry = <\\B>
+  BracketCharacter.InputBeginBoundry = <\\A>
+  BracketCharacter.PrevMatchEndBoundry = <\\G>
+  BracketCharacter.EndInputBoundry = <\\Z>
+  BracketCharacter.EndInputFinalBoundry = <\\z>
+  BracketCharacter.BackReference = <\\ <BackReference>>
+  BracketCharacter.Space = <\\ >
+  BracketCharacter.Tab = <\\<\t>>
+  BracketCharacter.Newline = <\\<\n>>
+  AtomCharacter.OctalChar = <\\0 <OctalValue>>
+  AtomCharacter.HexHexChar = <\\x <TwoHexValue>>
+  AtomCharacter.DecHexChar = <\\u <FourHexValue>>
+  AtomCharacter.Tab = <\\t>
+  AtomCharacter.Newline = <\\n>
+  AtomCharacter.Return = <\\r>
+  AtomCharacter.Formfeed = <\\f>
+  AtomCharacter.Alarm = <\\a>
+  AtomCharacter.Escape = <\\e>
+  AtomCharacter.WordChar = <\\w>
+  AtomCharacter.NonWordChar = <\\W>
+  AtomCharacter.WhiteSpaceChar = <\\s>
+  AtomCharacter.NonWhiteSpaceChar = <\\S>
+  AtomCharacter.DigitChar = <\\d>
+  AtomCharacter.NonDigitChar = <\\D>
+  AtomCharacter.ControlCharacter = <\\c <ControlValue>>
+  AtomCharacter.WordBoundry = <\\b>
+  AtomCharacter.NonWordBoundry = <\\B>
+  AtomCharacter.InputBeginBoundry = <\\A>
+  AtomCharacter.PrevMatchEndBoundry = <\\G>
+  AtomCharacter.EndInputBoundry = <\\Z>
+  AtomCharacter.EndInputFinalBoundry = <\\z>
+  AtomCharacter.BackReference = <\\ <BackReference>>
+  AtomCharacter.Space = <\\ >
+  AtomCharacter.Tab = <\\<\t>>
+  AtomCharacter.Newline = <\\<\n>>
+  AtomCharacter.Quoted = <\\ <QuotablePatternSymbol>>
+  BracketCharacter.Quoted = <\\ <QuotablePatternSymbol>>
+  QuotablePatternSymbol.DoubleQuote = <\">
+  QuotablePatternSymbol.DoubleQuote = <\">
+  RegexId.RegexId = <<RegexID>>
+
+lexical syntax
+  [a-zA-Z0-9\!\#\%\'\,\:\;\<\=\>\@\_\`\~\$\*\+\?\.\}\|]
+                                                -> BracketLiteral
+  "/"                                           -> BracketLiteral
+  [\&\]\-]                                      -> BracketLiteral {reject}
+  [a-zA-Z0-9\!\#\%\'\,\:\;\<\=\>\@\_\`\~\&\]\-]
+                                                -> AtomLiteral
+  "/"                                           -> AtomLiteral
+  [\}\)\|\[]                                    -> AtomLiteral {reject}
+
+  [\\\|\$\*\+\?\.\{\}\(\)\&\]\-\[\^\!\#\%\'\,\:\;\<\=\>\@\_\`\~a-zA-Z0-9\t\n\r]*
+        -> AllChars
+  "/"   -> AllChars
+  "\""  -> AllChars {cons("DoubleQuote") }
+
+  "i"       -> Modifier
+  "g"       -> Modifier
+  "m"       -> Modifier
+  Modifier* -> Modifiers
+
+lexical syntax
+  [\|\$\*\+\?\.\{\}\(\)\&\]\[\-\^\\\!\#\%\'\,\:\;\<\=\>\@\_\`\~\/]
+                                 -> QuotablePatternSymbol
+
+lexical syntax
+  [0-9]+                                       -> Integer
+  [1-9] [0-9]*                                 -> BackReference
+  [0-7]                                        -> OctalValue
+  [0-7][0-7]                                   -> OctalValue
+  [0-3][0-7][0-7]                              -> OctalValue
+  [0-9A-Fa-f][0-9A-Fa-f]                       -> TwoHexValue
+  [0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f] -> FourHexValue
+  [0-9]                                        -> ControlValue
+  [0-9][0-9]                                   -> ControlValue
+
+lexical syntax
+  [A-Za-z\_\$][A-Za-z0-9\_\$]* -> RegexID
+
+  "true"  -> RegexID {reject}
+  "false" -> RegexID {reject}
+  "null"  -> RegexID {reject}
+
+lexical restrictions
+  RegexID -/- [a-zA-Z0-9\_\$]

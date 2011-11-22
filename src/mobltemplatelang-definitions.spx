@@ -1,0 +1,21 @@
+package mobltemplatelang
+
+// Following module define the main langauge constructs for MoBLTemplateLang language
+module MoBLTemplateLang-MainConstructs
+
+imports mobltemplatelang.generated
+
+rules
+	// Analyzes the current program, returning a tuple with errors, warnings, and notes;
+	// each a list of (term, message) tuples or simply (message) terms.
+	editor-analyze:
+		(ast, path, project-path) -> (ast, [], [], [])
+		with
+			debug; editor-init
+
+  editor-complete:
+    (node, position, ast, path, project-path) -> <debug; fail>
+
+completions
+
+  completion proposer : editor-complete

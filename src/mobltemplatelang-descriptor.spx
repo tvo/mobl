@@ -1,0 +1,19 @@
+package mobltemplatelang
+	
+module MoBLTemplateLang-Descriptor
+	 		
+imports mobltemplatelang.generated  
+	 		
+
+language General properties
+                  
+  name          : MoBLTemplateLang
+  extends       : Root
+  id            : mobltemplatelang
+                  
+  description   : "Spoofax/IMP-generated(using spoofaxlang) editor for the MoBL-TemplateLang language "
+  url           : http://strategoxt.org
+                  
+  extensions    : mobl
+  start symbols : Start
+	 			

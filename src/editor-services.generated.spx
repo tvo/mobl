@@ -1,0 +1,238 @@
+package mobltemplatelang.generated
+
+module Builders
+
+
+builders
+
+  // Building and analysis is defined in Stratego program or programs:
+  //
+  //   provider : stratego-program.ctree
+  //   provider : stratego-library.jar
+  //
+  // Analysis is carried out by a Stratego rule that can be selected as follows:
+  //
+  //   observer : analysis-rule
+  //
+  // Any dynamic rules set in the analysis may be used by other semantic services,
+  // such as reference resolving or the builders.
+  //
+  // Builders may carry out custom transformations on a file or selection.
+  // (At run-time, they can be accessed using the toolbar button with the star icon.)
+  // Builders can be specified as follows:
+  //
+  //   builder : "Generate Java code" = generate-java (openeditor) (persistent) (realtime)
+  //
+  // In this example, the caption "Generate Java code" is used in the build button dropdown menu,
+  // and the generate-java rule is used to carry out the tranformation.
+  // Builder definitions can also specify any combination of the following annotations:
+  //
+  //   (cursor)      The builder should always transform the tree node at the cursor.
+  //   (meta)        Indicates the builder should only be available to meta-programmers
+  //                 (i.e., not when the plugin is deployed to end-users).
+  //   (openeditor)  Indicates an editor should be opened with the result.
+  //   (persistent)  Indicates that the resulting file should be saved to disk.
+  //   (realtime)    Indicates that the resulting editor should be updated in real-time
+  //                 as the source file is edited.
+  //   (source)      Always apply this builder to the source AST, not to the AST
+  //                 after it has been analyzed/desugared by the observer.
+  //
+  // Refactorings are used for transformations that modify the original source code;
+  // the original layout is preserved for unchanged fragments,
+  // while newly inserted nodes are pretty printed using a custom pretty-print strategy,
+  // or the layout definitions in the pp-table.
+  //   pp-table: get-pp-table
+  //   pretty-print: prettyprint
+  //
+  // Refactorings can be specified as shown below, whereby Property* indicates on which constructs the
+  // refactoring is specified (<sort>.<constructor>).
+  //
+  //   refactoring Property*: "Extract Entity" =  extract-entity (source)
+  //
+  // The 'on save' handler can be used  to generate code as files are saved:
+  //
+  //   on save : generate-java
+
+
+module References-Generated
+
+
+references
+
+  // Reference resolving rules can specify the syntax constructors for which
+  // a reference resolving function is available:
+  //
+  //   reference FunctionCall : resolve-function-call
+  //
+  // This defines that for each FunctionCall, resolve-function-call
+  // will retrieve the AST node that declares it.
+  //
+  // Likewise, hover help can be specified as follows:
+  //
+  //   hover FunctionCall : hover-help-function-call
+  //
+  // Reference resolving uses the semantic provider defined in YourLanguage-Builders.esv
+  // All semantic services may make use of the dynamic rules created by the observer.
+
+
+module Outliner-Generated
+
+outliner Default outliner
+
+
+  // Outliner rules indicate which syntactic constructs should be shown in the outline
+  // and quick outline views, and take one of the following forms:
+  //
+  //   <sort>.<constructor>
+  //
+  //   <sort>._
+  //
+  //   _.<constructor>
+
+
+
+
+module Folding-Generated
+
+folding Default folding definitions
+
+  // Folding rules indicate which syntactic constructs can be folded,
+  // and take one of the following forms:
+  //
+  //   <sort>.<constructor>
+  //
+  //   <sort>._
+  //
+  //   _.<constructor>
+  //
+  // To indicate that an element should always be folded, add
+  // a (folded) annotation:
+  //
+  //   _.Imports (folded)
+  //
+  // To disable a folding rule defined elsewhere, add a (disabled) annotation:
+  //
+  //   Definition._ (disabled)
+
+
+
+module Colorer-Generated
+
+
+colorer
+
+  // Sort-based highlighting with background color
+  //   Id: yellow green
+  //
+  // Sort- and constructor-based highlighting
+  //   ClassBodyDec.MethodDec: yellow
+  //
+  // Constructor-based highlighting
+  //   _.MethodDec: 255 0 0
+  //
+  // Example: background colors for ToMetaExpr/FromMetaExpr, if supported by the grammar
+  //   environment _.ToMetaExpr:   _ 220 230 200
+  //   environment _.FromMetaExpr: _ white
+colorer Default, token-based highlighting
+
+  keyword    : 127 0 85 bold
+  identifier : default
+  string     : blue
+  number     : darkgreen
+  var        : 255 0 100 italic
+  operator   : 0 0 128
+  layout     : 63 127 95 italic
+
+                                   colorer System colors
+
+                                     darkred   = 128 0 0
+                                     red       = 255 0 0
+                                     darkgreen = 0 128 0
+                                     green     = 0 255 0
+                                     darkblue  = 0 0 128
+                                     blue      = 0 0 255
+                                     cyan      = 0 255 255
+                                     magenta   = 255 0 255
+                                     yellow    = 255 255 0
+                                     white     = 255 255 255
+                                     black     = 0 0 0
+                                     gray      = 128 128 128
+                                     grey      = gray
+                                     orange    = 255 165 0
+                                     pink      = 255 105 180
+                                     brown     = 139 69 19
+                                     default   = _
+
+
+module ContentCompletion-Generated
+
+
+completions
+
+  // Syntactic content completion can be defined as follows:
+  //
+  //   completion keyword  : "keyword"
+  //   completion template : "if " <e> " then\n\t" <s> "\nend"
+  //
+  // This defines keyword completion for "keyword" and
+  // a template completion for the "if" keyword (note the use of \n, \t, and spaces).
+  // In this template, the text selection expands to the "e" placeholder identifier
+  // enclosed in <> brackets.
+  //
+  // Use the (blank) annotation if you want a template completion only to
+  // appear on blank lines:
+  //
+  //   completion template: "section " <title> "\n\t" (blank)
+  //
+  // You can specify a specific SDF sort for which a completion
+  // rule should trigger as follows:
+  //
+  //   completion template Section :
+  //     "section " <title> "\n\t" (blank)
+  //
+  // Finally, you can override the prefix of the completion:
+  //
+  //   completion template Statement : "assignment" =
+  //     <x> " = " <y> (blank)
+  //
+  // Semantic content completion can be defined as follows:
+  //
+  //   completion proposer : completion-function-call
+  //   completion trigger  : "\."
+  //
+  // This sets completion-function-call as the completion strategy,
+  // and declares that [A-Za-z0-9_]+ may be used as a lexical pattern
+  // to parse identifiers (used to set the text selection with suggestions).
+  // The completion trigger uses a regular expression to specify that
+  // completions should be proposed as the user types ".".
+  //
+  // Completions make use of the identifier lexical defined in YourLanguage-Syntax.esv
+  // to select identifiers in completion suggestions.
+  //
+  // Semantic completion uses the semantic provider defined in YourLanguage-Builders.esv
+  // All semantic services may make use of the dynamic rules created by the observer.
+
+
+module Syntax-Generated
+
+language Syntax properties (static defaults)
+
+  // Comment constructs:
+  line comment                           : "//"
+  block comment                          : "/*" * "*/"
+
+  // Fences (used for matching,
+  // inserting, indenting brackets):
+  fences                                 : [ ]
+                                           ( )
+                                           { }
+
+  // Automatic indent hints
+  // (indent after these tokens):
+  indent after                           : "="
+                                           ":"
+
+  // Regular expression for identifiers:
+  identifier lexical                     : "[A-Za-z][A-Za-z0-9_]*"
+
+

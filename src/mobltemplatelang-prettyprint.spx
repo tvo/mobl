@@ -1,0 +1,196 @@
+package mobltemplatelang
+module MoBLTemplateLang-prettyprint
+
+strategies
+  prettyprint-MoBLTemplateLang =
+       is-string
+		<+ prettyprint-AllChars
+		<+ prettyprint-Anno
+		<+ prettyprint-Atom
+		<+ prettyprint-AtomCharacter
+		<+ prettyprint-AtomLiteral
+		<+ prettyprint-BackReference
+		<+ prettyprint-BoolMethodId
+		<+ prettyprint-BracketCharacter
+		<+ prettyprint-BracketItem
+		<+ prettyprint-BracketLiteral
+		<+ prettyprint-BracketLiteralOrCharacter
+		<+ prettyprint-Branche
+		<+ prettyprint-COLOR
+		<+ prettyprint-Case
+		<+ prettyprint-CharacterClass
+		<+ prettyprint-ClassKeyword
+		<+ prettyprint-CompareMethodId
+		<+ prettyprint-ControlDefinition
+		<+ prettyprint-ControlSig
+		<+ prettyprint-ControlValue
+		<+ prettyprint-Definition
+		<+ prettyprint-EntityBodyDecl
+		<+ prettyprint-Exp
+		<+ prettyprint-ExternalMemberDecl
+		<+ prettyprint-FArg
+		<+ prettyprint-FILENAME
+		<+ prettyprint-Filter
+		<+ prettyprint-FourHexValue
+		<+ prettyprint-FunctionDef
+		<+ prettyprint-HTMLID
+		<+ prettyprint-HtmlArg
+		<+ prettyprint-HttpMethod
+		<+ prettyprint-ID
+		<+ prettyprint-Integer
+		<+ prettyprint-JSAssignOp
+		<+ prettyprint-JSBoolMethodId
+		<+ prettyprint-JSCompareMethodId
+		<+ prettyprint-JSDecimalLiteral
+		<+ prettyprint-JSExp
+		<+ prettyprint-JSHexIntegerLiteral
+		<+ prettyprint-JSID
+		<+ prettyprint-JSIndexerSubscript
+		<+ prettyprint-JSLVal
+		<+ prettyprint-JSModule
+		<+ prettyprint-JSOperatorMethodId
+		<+ prettyprint-JSPropVal
+		<+ prettyprint-JSSTRING
+		<+ prettyprint-JSStat
+		<+ prettyprint-JSTermOperatorMethodId
+		<+ prettyprint-LValue
+		<+ prettyprint-LimitedExp
+		<+ prettyprint-LimitedSetExp
+		<+ prettyprint-MetaAnno
+		<+ prettyprint-Modifiers
+		<+ prettyprint-NFType
+		<+ prettyprint-NUMBER
+		<+ prettyprint-NamedExp
+		<+ prettyprint-OctalValue
+		<+ prettyprint-OperatorMethodId
+		<+ prettyprint-OrderExp
+		<+ prettyprint-Path
+		<+ prettyprint-Pattern
+		<+ prettyprint-Piece
+		<+ prettyprint-PropVal
+		<+ prettyprint-QId
+		<+ prettyprint-Quantifier
+		<+ prettyprint-QuotablePatternSymbol
+		<+ prettyprint-RegexID
+		<+ prettyprint-RegexId
+		<+ prettyprint-ResourceElem
+		<+ prettyprint-STRING
+		<+ prettyprint-STYLEID
+		<+ prettyprint-STYLEPROPID
+		<+ prettyprint-ScreenElem
+		<+ prettyprint-ServerSetting
+		<+ prettyprint-ServiceElem
+		<+ prettyprint-SetExp
+		<+ prettyprint-Setting
+		<+ prettyprint-Start
+		<+ prettyprint-Statement
+		<+ prettyprint-StyleElem
+		<+ prettyprint-StyleExp
+		<+ prettyprint-StyleExps
+		<+ prettyprint-StyleExpsTL
+		<+ prettyprint-StyleFArg
+		<+ prettyprint-StyleSelector
+		<+ prettyprint-StyleVar
+		<+ prettyprint-TermOperatorMethodId
+		<+ prettyprint-TwoHexValue
+		<+ prettyprint-Type
+		<+ prettyprint-Unit
+		<+ prettyprint-UriPart
+		<+ prettyprint-UriPath
+		<+ prettyprint-VarJSExp
+
+strategies
+  prettyprint-AllChars = fail
+  prettyprint-Anno = fail
+  prettyprint-Atom = fail
+  prettyprint-AtomCharacter = fail
+  prettyprint-AtomLiteral = fail
+  prettyprint-BackReference = fail
+  prettyprint-BoolMethodId = fail
+  prettyprint-BracketCharacter = fail
+  prettyprint-BracketItem = fail
+  prettyprint-BracketLiteral = fail
+  prettyprint-BracketLiteralOrCharacter = fail
+  prettyprint-Branche = fail
+  prettyprint-COLOR = fail
+  prettyprint-Case = fail
+  prettyprint-CharacterClass = fail
+  prettyprint-ClassKeyword = fail
+  prettyprint-CompareMethodId = fail
+  prettyprint-ControlDefinition = fail
+  prettyprint-ControlSig = fail
+  prettyprint-ControlValue = fail
+  prettyprint-Definition = fail
+  prettyprint-EntityBodyDecl = fail
+  prettyprint-Exp = fail
+  prettyprint-ExternalMemberDecl = fail
+  prettyprint-FArg = fail
+  prettyprint-FILENAME = fail
+  prettyprint-Filter = fail
+  prettyprint-FourHexValue = fail
+  prettyprint-FunctionDef = fail
+  prettyprint-HTMLID = fail
+  prettyprint-HtmlArg = fail
+  prettyprint-HttpMethod = fail
+  prettyprint-ID = fail
+  prettyprint-Integer = fail
+  prettyprint-JSAssignOp = fail
+  prettyprint-JSBoolMethodId = fail
+  prettyprint-JSCompareMethodId = fail
+  prettyprint-JSDecimalLiteral = fail
+  prettyprint-JSExp = fail
+  prettyprint-JSHexIntegerLiteral = fail
+  prettyprint-JSID = fail
+  prettyprint-JSIndexerSubscript = fail
+  prettyprint-JSLVal = fail
+  prettyprint-JSModule = fail
+  prettyprint-JSOperatorMethodId = fail
+  prettyprint-JSPropVal = fail
+  prettyprint-JSSTRING = fail
+  prettyprint-JSStat = fail
+  prettyprint-JSTermOperatorMethodId = fail
+  prettyprint-LValue = fail
+  prettyprint-LimitedExp = fail
+  prettyprint-LimitedSetExp = fail
+  prettyprint-MetaAnno = fail
+  prettyprint-Modifiers = fail
+  prettyprint-NFType = fail
+  prettyprint-NUMBER = fail
+  prettyprint-NamedExp = fail
+  prettyprint-OctalValue = fail
+  prettyprint-OperatorMethodId = fail
+  prettyprint-OrderExp = fail
+  prettyprint-Path = fail
+  prettyprint-Pattern = fail
+  prettyprint-Piece = fail
+  prettyprint-PropVal = fail
+  prettyprint-QId = fail
+  prettyprint-Quantifier = fail
+  prettyprint-QuotablePatternSymbol = fail
+  prettyprint-RegexID = fail
+  prettyprint-RegexId = fail
+  prettyprint-ResourceElem = fail
+  prettyprint-STRING = fail
+  prettyprint-STYLEID = fail
+  prettyprint-STYLEPROPID = fail
+  prettyprint-ScreenElem = fail
+  prettyprint-ServerSetting = fail
+  prettyprint-ServiceElem = fail
+  prettyprint-SetExp = fail
+  prettyprint-Setting = fail
+  prettyprint-Start = fail
+  prettyprint-Statement = fail
+  prettyprint-StyleElem = fail
+  prettyprint-StyleExp = fail
+  prettyprint-StyleExps = fail
+  prettyprint-StyleExpsTL = fail
+  prettyprint-StyleFArg = fail
+  prettyprint-StyleSelector = fail
+  prettyprint-StyleVar = fail
+  prettyprint-TermOperatorMethodId = fail
+  prettyprint-TwoHexValue = fail
+  prettyprint-Type = fail
+  prettyprint-Unit = fail
+  prettyprint-UriPart = fail
+  prettyprint-UriPath = fail
+  prettyprint-VarJSExp = fail
