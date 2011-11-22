@@ -6,3 +6,14 @@ www/*.html
 build.generated.xml
 *.class
 /java/fileserver.jar
+
+/.spxcache
+/.spxindex
+/.shadowdir
+/bin
+/editor/java/mobltemplatelang/generated
+/include
+/utils
+
+*.aterm
+*.pp.mobl
