@@ -1,10 +1,19 @@
 package mobltemplatelang
 module MoBLTemplateLang-prettyprint
 
+imports
+  libstratego-gpp
+
 strategies
+
   prettyprint-MoBLTemplateLang =
-       is-string
-		<+ prettyprint-AllChars
+    prettyprint-MoBLTemplateLang';
+    !V([], <id>);
+    debug;
+    box2text-string'(|100)
+
+  prettyprint-MoBLTemplateLang' =
+		   prettyprint-AllChars
 		<+ prettyprint-Anno
 		<+ prettyprint-Atom
 		<+ prettyprint-AtomCharacter
