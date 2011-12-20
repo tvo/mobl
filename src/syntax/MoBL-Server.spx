@@ -6,7 +6,7 @@ templates
 
     <ServerSetting*; separator="\n">
 
-    <Definition*; separator="\n">
+    <Definitions>
   >
   ServerSetting.DatabaseSetting = <
     database

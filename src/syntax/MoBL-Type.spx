@@ -2,13 +2,13 @@ package mobltemplatelang
 module MoBL-Type
 templates
   Definition.TypeNoSuper = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     type <QId> {
       <EntityBodyDecl*; separator="\n">
     }
   >
   Definition.Type = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     type <QId> : <Type> {
       <EntityBodyDecl*; separator="\n">
     }

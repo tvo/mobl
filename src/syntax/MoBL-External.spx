@@ -2,13 +2,13 @@ package mobltemplatelang
 module MoBL-External
 templates
   Definition.ExternalTypeNoSuper = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     external type <QId> {
       <ExternalMemberDecl*; separator="\n">
     }
   >
   Definition.ExternalType = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     external type <QId> : <Type> {
       <ExternalMemberDecl*; separator="\n">
     }
@@ -20,48 +20,48 @@ templates
     }
   ]
   ExternalMemberDecl.ExternalStaticMethod = <
-    <MetaAnno*; separator="\n">
-    static function <ID>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    static function <ID>(<FArgs>) : <Type>
   >
   ExternalMemberDecl.ExternalMethod = <
-    <MetaAnno*; separator="\n">
-    function <ID>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    function <ID>(<FArgs>) : <Type>
   >
   ExternalMemberDecl.ExternalStaticSyncMethod = <
-    <MetaAnno*; separator="\n">
-    static sync function <ID>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    static sync function <ID>(<FArgs>) : <Type>
   >
   ExternalMemberDecl.ExternalSyncMethod = <
-    <MetaAnno*; separator="\n">
-    sync function <ID>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    sync function <ID>(<FArgs>) : <Type>
   >
   ExternalMemberDecl = <<EntityBodyDecl>>
   Definition.ExternalControl = <
-    <MetaAnno*; separator="\n">
-    external control <QId>(<FArg*; separator=", "> )
+    <MetaAnnos>
+    external control <QId>(<FArgs> )
   >
   Definition.ExternalScreen = <
-    <MetaAnno*; separator="\n">
-    external screen <QId>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    external screen <QId>(<FArgs>) : <Type>
   >
   Definition.ExternalEntity = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     external entity <QId> : <Type> {
       <EntityBodyDecl*; separator="\n">
     }
   >
   Definition.ExternalFunction = <
-    <MetaAnno*; separator="\n">
-    external function <QId>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    external function <QId>(<FArgs>) : <Type>
   >
   Definition.ExternalSyncFunction = <
-    <MetaAnno*; separator="\n">
-    external sync function <QId>(<FArg*; separator=", ">) : <Type>
+    <MetaAnnos>
+    external sync function <QId>(<FArgs>) : <Type>
   >
   Definition.ExternalVarDecl = <
     external var <QId> : <Type>;
   >
   Definition.ExternalControl = <
-    <MetaAnno*; separator="\n">
-    external template <QId>(<FArg*; separator=", "> )
+    <MetaAnnos>
+    external template <QId>(<FArgs> )
   > {deprecated("The 'template' keyword has been replaced with 'control'.")}

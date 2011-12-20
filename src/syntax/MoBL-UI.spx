@@ -2,30 +2,30 @@ package mobltemplatelang
 module MoBL-UI
 templates
   Definition.ScreenNoReturnType = <
-    <MetaAnno*; separator="\n">
-    screen <QId>(<FArg*; separator=", ">) {
+    <MetaAnnos>
+    screen <QId>(<FArgs>) {
       <ScreenElem*; separator="\n">
     }
   >
   Definition.Screen = <
-    <MetaAnno*; separator="\n">
-    screen <QId>(<FArg*; separator=", ">) : <Type> {
+    <MetaAnnos>
+    screen <QId>(<FArgs>) : <Type> {
       <ScreenElem*; separator="\n">
     }
   >
   ControlDefinition.Control = <
-    <MetaAnno*; separator="\n">
-    control <QId>(<FArg*; separator=", ">) {
+    <MetaAnnos>
+    control <QId>(<FArgs>) {
       <ScreenElem*; separator="\n">
     }
   >
   ControlDefinition.Control = <
-    <MetaAnno*; separator="\n">
-    template <QId>(<FArg*; separator=", ">) {
+    <MetaAnnos>
+    template <QId>(<FArgs>) {
       <ScreenElem*; separator="\n">
     }
   > {deprecated("the 'template' keyword has been replaced with 'control'.")}
-  ControlSig.ControlSig = <<ID>(<FArg*; separator=", ">)>
+  ControlSig.ControlSig = <<ID>(<FArgs>)>
   Definition = <<ControlDefinition>>
   ScreenElem.Html = [
     <[HTMLID] [HtmlArg*]>
@@ -49,12 +49,12 @@ templates
   ScreenElem = <<FunctionDef>>
   ScreenElem.Script = <
     script {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   ScreenElem.Script = <
     init {
-      <Statement*; separator="\n">
+      <Statements>
     }
   > {deprecated("Please use 'script' instead.")}
   ScreenElem.ScreenString = <<STRING>>

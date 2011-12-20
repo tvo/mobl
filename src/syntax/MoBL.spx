@@ -5,17 +5,24 @@ context-free start-symbols
   Start
 
 templates
+  // factoring out common separators
+  Definitions = <<Definition*; separator="\n">>
+  FArgs = <<FArg*; separator=", ">>
+  MetaAnnos = <<MetaAnno*; separator="\n", hide>>
+  Statements = <<Statement*; separator="\n">>
+
+templates
   QId = <<ID>>
   QId.QId = <<QId>::<ID>>
   Start.Module = <
     module <QId>
 
-    <Definition*; separator="\n">
+    <Definitions>
   >
   Start.Application = <
     application <ID>
 
-    <Definition*; separator="\n">
+    <Definitions>
   >
   Definition.DynamicImport = <dynamic import <QId>>
   Definition.Import = <import <QId>>

@@ -2,15 +2,15 @@ package mobltemplatelang
 module MoBL-Service
 templates
   Definition.Service = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     service <QId> {
       <ServiceElem*; separator="\n">
     }
   >
   ServiceElem = <<PropVal>>
   ServiceElem.Resource = <
-    <MetaAnno*; separator="\n">
-    resource <ID>(<FArg*; separator=", ">) : <Type> {
+    <MetaAnnos>
+    resource <ID>(<FArgs>) : <Type> {
       <ResourceElem*; separator="\n">
     }
   >

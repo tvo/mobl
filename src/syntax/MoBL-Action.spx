@@ -2,51 +2,51 @@ package mobltemplatelang
 module MoBL-Action
 templates
   FunctionDef.Function = <
-    <MetaAnno*; separator="\n">
-    function <QId>(<FArg*; separator=", ">) : <Type> {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    function <QId>(<FArgs>) : <Type> {
+      <Statements>
     }
   >
   FunctionDef.FunctionNoReturnType = <
-    <MetaAnno*; separator="\n">
-    function <QId>(<FArg*; separator=", ">) {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    function <QId>(<FArgs>) {
+      <Statements>
     }
   >
   FunctionDef.SyncFunction = <
-    <MetaAnno*; separator="\n">
-    sync function <QId>(<FArg*; separator=", ">) : <Type> {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    sync function <QId>(<FArgs>) : <Type> {
+      <Statements>
     }
   >
   FunctionDef.SyncFunctionNoReturnType = <
-    <MetaAnno*; separator="\n">
-    sync function <QId>(<FArg*; separator=", ">) {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    sync function <QId>(<FArgs>) {
+      <Statements>
     }
   >
   FunctionDef.StaticFunction = <
-    <MetaAnno*; separator="\n">
-    static function <QId>(<FArg*; separator=", ">) : <Type> {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    static function <QId>(<FArgs>) : <Type> {
+      <Statements>
     }
   >
   FunctionDef.StaticFunctionNoReturnType = <
-    <MetaAnno*; separator="\n">
-    static function <QId>(<FArg*; separator=", ">) {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    static function <QId>(<FArgs>) {
+      <Statements>
     }
   >
   FunctionDef.StaticSyncFunction = <
-    <MetaAnno*; separator="\n">
-    static sync function <QId>(<FArg*; separator=", ">) : <Type> {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    static sync function <QId>(<FArgs>) : <Type> {
+      <Statements>
     }
   >
   FunctionDef.StaticSyncFunctionNoReturnType = <
-    <MetaAnno*; separator="\n">
-    static sync function <QId>(<FArg*; separator=", ">) {
-      <Statement*; separator="\n">
+    <MetaAnnos>
+    static sync function <QId>(<FArgs>) {
+      <Statements>
     }
   >
   Definition = <<Statement>>
@@ -73,32 +73,32 @@ templates
   >
   Statement.For = <
     foreach(<LValue> : <Type> in <Exp>) {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   Statement.ForInferred = <
     foreach(<LValue> in <Exp>) {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   Statement.While = <
     while(<Exp>) {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   Statement.Block = <
     {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   Statement.For = <
     for(<LValue> : <Type> in <Exp>) {
-      <Statement*; separator="\n">
+      <Statements>
     }
   > {deprecated("To avoid confusing Javascript programmers, for(... in ...) is now foreach(... in ...)")}
   Statement.ForInferred = <
     for(<LValue> in <Exp>) {
-      <Statement*; separator="\n">
+      <Statements>
     }
   > {deprecated("To avoid confusing Javascript programmers, for(... in ...) is now foreach(... in ...)")}
   Statement.Return = <return <Exp>;>
@@ -107,7 +107,7 @@ templates
   Statement.ScreenReturn = <screen return;>
   Statement.Async = <
     async {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   Statement = <<FunctionDef>>
@@ -140,22 +140,22 @@ templates
   Exp.AsyncCall = <async(<Exp*; separator=", ">)> {prefer}
   Exp.Callback = <
     {
-      <Statement*; separator="\n">
+      <Statements>
     }
   >
   Exp.AnonymousControl = <
-    control(<FArg*; separator=", ">) {
+    control(<FArgs>) {
       <ScreenElem*; separator="\n">
     }
   >
   Exp.AnonymousFunctionNoReturnType = <
-    function(<FArg*; separator=", ">) {
-      <Statement*; separator="\n">
+    function(<FArgs>) {
+      <Statements>
     }
   >
   Exp.AnonymousFunction = <
-    function(<FArg*; separator=", ">) : <Type> {
-      <Statement*; separator="\n">
+    function(<FArgs>) : <Type> {
+      <Statements>
     }
   >
   PropVal.PropVal = <<ID> = <Exp>>

@@ -2,13 +2,13 @@ package mobltemplatelang
 module MoBL-Style
 templates
   Definition.Style = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     style <StyleSelector+; separator="\n"> {
       <StyleElem*; separator="\n">
     }
   >
   Definition.StyleMixin = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     style mixin <QId>(<StyleFArg*; separator=", ">) {
       <StyleElem*; separator="\n">
     }
@@ -17,7 +17,7 @@ templates
   Definition.StyleVarDecl = <style <StyleVar> = <StyleExp>>
   StyleVar.StyleVar = <$<STYLEID>>
   Definition.ExternalStyle = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     external style <StyleSelector+; separator="\n">
   >
   StyleElem.StyleProperty = <<STYLEPROPID> : <StyleExpsTL>;>

@@ -2,24 +2,24 @@ package mobltemplatelang
 module MoBL-Data
 templates
   Definition.Entity = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     entity <QId> : <Type> {
       <EntityBodyDecl*; separator="\n">
     }
   >
   Definition.EntityNoSuper = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     entity <QId> {
       <EntityBodyDecl*; separator="\n">
     }
   >
   EntityBodyDecl = <<ID>>
   EntityBodyDecl.Property = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     <ID> : <Type> (<Anno*; separator=", ">)
   >
   EntityBodyDecl.PropertyNoAnnos = <
-    <MetaAnno*; separator="\n">
+    <MetaAnnos>
     <ID> : <Type>
   >
   EntityBodyDecl = <<FunctionDef>>
