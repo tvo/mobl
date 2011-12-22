@@ -2,6 +2,7 @@ package mobltemplatelang
 module MoBLTemplateLang-prettyprint
 
 imports
+  libstratego-lib
   libstratego-gpp
 
 strategies
@@ -11,6 +12,8 @@ strategies
     !V([], <id>);
     debug;
     box2text-string'(|100)
+
+  box2text-string'(|n) = fail
 
   prettyprint-MoBLTemplateLang' =
 		   prettyprint-AllChars
