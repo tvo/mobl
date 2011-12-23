@@ -14,7 +14,7 @@ templates
     }
   >
   Definition.ExternalGenericType = [
-    [MetaAnno*]
+    [MetaAnnos]
     external type [QId]<[ID*; separator=", "]> {
       [ExternalMemberDecl*]
     }
