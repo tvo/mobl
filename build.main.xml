@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 		
 <project name="MoBLTemplateLang" default="all">
-	
-	<!-- prject directories -->
-  <property name="trans" location="trans"/>
-  <property name="src-gen" location="editor/java"/>
-  <property name="include" location="include"/>
-  <property name="lib" location="lib"/>
-  <property name="build" location="bin"/> 
-  <property name="dist" location="bin/dist"/>
 
-	
+	  <!-- prject directories -->
+	  <property name="trans" location="trans"/>
+	  <property name="src-gen" location="editor/java"/>
+	  <property name="include" location="include"/>
+	  <property name="lib" location="lib"/>
+	  <property name="build" location="bin"/> 
+	  <property name="dist" location="bin/dist"/>
+
 	  
-	<!-- Environment configuration for command-line builds -->
-  <property name="build.sdf.imports" value= "-I &quot;${basedir}&quot; "/>
-  <property name="build.stratego.args" value="
-                  --library
-                  -I &quot;${basedir}&quot;
-                  -la stratego-lib -la stratego-sglr -la stratego-gpp -la stratego-xtc -la stratego-aterm  -la strc -la stratego-sdf"/>
+	    
+	  <!-- Environment configuration for command-line builds -->
+	  <property name="build.sdf.imports" value= "-I &quot;${basedir}&quot; "/>
+	  <property name="build.stratego.args" value="
+	                  --library
+	                  -I &quot;${basedir}&quot;
+	                  -la stratego-lib -la stratego-sglr -la stratego-gpp -la stratego-xtc -la stratego-aterm  -la strc -la stratego-sdf"/>
 
-  <condition property="build.strategoxt.sdf" value="${eclipse.spoofaximp.nativeprefix}" else="">
-  	<isset property="eclipse.spoofaximp.nativeprefix"/>
-  </condition>
-  
-  <property name="build.strategoxt.stratego" location="${user.home}/.nix-profile/bin"/>
-  <import file=".build/build.spx.main.generated.xml"/>
-  
-  <!-- Compiles and Generates Artefacts. Internally it calls build-spoofaxlang-jvm strategy -->
- 	<target name="buildinit">
-  	<java classname="org.strategoxt.imp.metatooling.building.AntSpxGenerateArtefacts" failonerror="true">
-		 	<arg value="${basedir}"/>
-	  </java>
-  </target>
-	
-  <!-- Main target -->
-  <target name="all" depends="buildinit,build-spx-packages"/>
-</project>
+	  <condition property="build.strategoxt.sdf" value="${eclipse.spoofaximp.nativeprefix}" else="">
+	    <isset property="eclipse.spoofaximp.nativeprefix"/>
+	  </condition>
+	  
+	  <property name="build.strategoxt.stratego" location="${user.home}/.nix-profile/bin"/>
+	  <import file=".build/build.spx.main.generated.xml" optional = "true"/>
+	  
+	  <!-- Compiles and Generates Artefacts. Internally it calls build-spoofaxlang-jvm strategy -->
+	  <target name="generate-incrementally">
+	    <java classname="org.strategoxt.imp.metatooling.building.AntSpxGenerateArtefacts" failonerror="true">
+	      <arg value="${basedir}"/>
+	      <arg value="-i"/> <!-- Incremental Build -->
+	    </java>
+	  </target>
+	  
+	  <target name="generate-all">
+	    <java classname="org.strategoxt.imp.metatooling.building.AntSpxGenerateArtefacts" failonerror="true">
+	      <arg value="${basedir}"/>
+	      <arg value="-c"/> <!-- clean Build -->
+	    </java>
+	  </target>
+	  
+	  <target name="build-incrementally" depends="generate-incrementally">
+	    <antcall target = "build-spx-packages"/>
+	  </target>
+	  
+	  <target name="build-clean" depends="generate-all">
+	    <antcall target = "build-spx-packages"/>
+	  </target>
+	  
+	  <!-- Main target -->
+	  <target name = "all" depends = "build-clean"/>
+	</project>
