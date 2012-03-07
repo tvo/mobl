@@ -145,7 +145,7 @@ lexical syntax
   [\\\|\$\*\+\?\.\{\}\(\)\&\]\-\[\^\!\#\%\'\,\:\;\<\=\>\@\_\`\~a-zA-Z0-9\t\n\r]*
         -> AllChars
   "/"   -> AllChars
-  "\""  -> AllChars {cons("DoubleQuote") }
+  "\""  -> AllChars
 
   "i"       -> Modifier
   "g"       -> Modifier
