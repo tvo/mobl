@@ -59,17 +59,11 @@ templates
   LValue.LIndexer = <<Exp>[<Exp>]> {left}
   Statement.ExpStat = <<Exp>;>
   Statement.If = <
-    <If>
-    <Else>
+    if(<Exp>) <Statement>
+    else <Statement>
   >
   Statement.IfNoElse = <
-    <If>
-  >
-  If.If = <
     if(<Exp>) <Statement>
-  >
-  Else.Else = <
-    else <Statement>
   >
   Statement.For = <
     foreach(<LValue> : <Type> in <Exp>) {
