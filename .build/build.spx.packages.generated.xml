@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="build.spx.generated">
   <target name="spx.default" depends="spx.default.ctree"/>
-  <target name="spx.default.ctree" depends="refresh,setup-params,check-classpath,init,sdf2table,meta-sdf2table, ppgen,pppack,stratego.aster,stratego.ctree,java.jar,sdf2imp, refresh"/>
+  <target name="spx.default.ctree" depends="refresh,setup-params,check-classpath,init,sdf2table,meta-sdf2table,ppgen,pppack,stratego.aster,stratego.ctree,java.jar,sdf2imp,refresh"/>
   <target name="spx.default.jar"   depends="refresh,setup-params,check-classpath,init,sdf2table,meta-sdf2table,ppgen,pppack,stratego.aster,stratego.jar,java.jar,sdf2imp,refresh"/>
 	
   <!-- Initialization -->
@@ -300,8 +300,46 @@
 	    <arg value="${build.strategoxt.sdf}"/>
 	 </java>
 	</target>
-	
-	
+
+
+  <target name="sdf2parenthesize" depends="pack-sdf,copy-sdf">
+      <dependset>
+          <srcfileset file="${include}/${package.name}.def"/>
+          <targetfileset file="${packages.root}/${package.name}-parenthesize.str"/>
+      </dependset>
+      <available file="${packages.root}/${package.name}-parenthesize.str" property="sdf2parenthesize.available"/>
+      <antcall target="sdf2parenthesize.helper"/>
+      <available file="${packages.root}/${package.name}-parenthesize.str" property="sdf2parenthesize.available"/>
+      <antcall target="sdf2parenthesize.helper.fallback"/>
+  </target>
+
+  <target name="sdf2parenthesize.helper" unless="sdf2parenthesize.available">
+      <java classname="run" failonerror="false">
+          <arg value="org.strategoxt.tools.main-sdf2parenthesize"/>
+          <arg value="-i"/>
+          <arg value="${include}/${package.name}.def"/>
+          <arg value="-m"/>
+          <arg value="${package.name}"/>
+          <arg value="-o"/>
+          <arg value="${packages.root}/${package.name}-parenthesize.str"/>
+          <arg value="--omod"/>
+          <arg value="${package.name}-parenthesize"/>
+          <arg value="--main-strategy"/>
+          <arg value="io-${package.name}-parenthesize"/>
+          <arg value="--lang"/>
+          <arg value="${package.name}"/>
+          <arg value="--rule-prefix"/>
+          <arg value="${package.name}"/>
+          <!-- <arg value="- -sig-module"/>
+          <arg value="include/${package.name}-signatures"/> -->
+      </java>
+  </target>
+
+  <target name="sdf2parenthesize.helper.fallback" unless="sdf2parenthesize.available">
+      <echo file="${packages.root}/${package.name}-parenthesize.str" message="module ${package.name}-parenthesize rules parenthesize-${package.name} = id"/>
+  </target>
+
+
   <!-- Aster to Stratego -->
    <target name="stratego.aster">
        <available file="${packages.root}/${package.main.str.module}.rtree" property="aster-output.available"/>
@@ -334,7 +372,7 @@
    </target>
 	
    <!-- Stratego to Java compiler -->
-   <target name="stratego.jar" depends="utils-files">
+   <target name="stratego.jar" depends="utils-files,sdf2parenthesize">
         <dependset>
             <srcfileset dir="${package.path}">
                 <include name="**/*.str"/>
@@ -376,7 +414,7 @@
 	
 	
 		<!-- Stratego to Java interpreter -->
-    <target name="stratego.ctree" >
+    <target name="stratego.ctree" depends="sdf2parenthesize" >
     	<dependset>
             <srcfileset dir="${packages.root}">
                 <include name="**/*.rtree"/>
