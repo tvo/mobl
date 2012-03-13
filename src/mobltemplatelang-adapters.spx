@@ -10,6 +10,7 @@ package mobltemplatelang
 	  
 			builder  : "Show abstract syntax (for selection)" = generate-aterm (openeditor) (realtime) (meta) (source)
 			builder  : "Pretty-printing (for selection)"      = prettyprint-selection (openeditor) (realtime)
+			builder  : "Run pretty-printing test"             = prettyprint-test-builder
 
 			// on save: generate-java
 						
@@ -29,3 +30,8 @@ rules
 		with
 			filename := <guarantee-extension(|"pp.mobl")> path;
 			result   := <prettyprint-MoBLTemplateLang-string> selected
+
+  prettyprint-test-builder:
+    (selected, position, ast, path, project-path) -> None()
+    with
+      <prettyprint-test> project-path

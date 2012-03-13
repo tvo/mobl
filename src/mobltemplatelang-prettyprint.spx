@@ -12,3 +12,39 @@ strategies
     prettyprint-MoBLTemplateLang;
     !V([], <id>);
     box2text-string(|100)
+
+  prettyprint-test =
+    // <conc-paths> (<id>, "samples");
+    walkdir-ext(prettyprint-test-file | ".mobl")
+
+  prettyprint-test-file =
+    ?filename;
+    debug;
+    parse-mobltemplatelang-file;
+    ?input;
+    prettyprint-MoBLTemplateLang-string;
+    parse-mobltemplatelang-string;
+    if not(?input) then
+      ?output;
+      <debug> $[XXX Test failed for : [filename]
+                 first parse  : [<write-to-string> input]
+                 second parse : [<write-to-string> output]]
+    end
+
+strategies
+
+  conc-paths:
+    (p1, p2) -> <concat-strings> [p1, "/", p2]
+
+  walkdir(s):
+    path -> path
+    with
+      contents := < readdir
+                  ; filter(not("." + ".."))
+                  ; string-sort
+                  ; map(<conc-paths> (path, <id>))> path;
+      (dirs, files) := <partition(where(filemode; isdir))> contents;
+      <all(s)> files;
+      <all(walkdir(s))> dirs
+
+  walkdir-ext(s|ext) = walkdir(if string-ends-with(|ext) then s end)
