@@ -2,30 +2,52 @@ package mobltemplatelang
 module jsJavascript
 templates
   JSModule.JSModule = <<JSStat*; separator="\n">>
-  JSStat.JSVarDeclNoInit = <var <JSID*; separator=", "> ;>
-  JSStat.JSVarDecl = <var <JSID> = <JSExp> ;>
-  JSStat.JSFor = <for(<JSStat> <JSExp> ; <JSExp>) <JSStat>>
+  JSStat.JSVarDeclNoInit = <var <JSID*; separator=", ">;>
+  JSStat.JSVarDecl = <var <JSID> = <JSExp>;>
+  JSStat.JSFor = <for(<JSStat> <JSExp>; <JSExp>) <JSStat>>
   JSStat.JSForIn = <for(var <JSID> in <JSExp>) <JSStat>>
   JSStat.JSIf = <if(<JSExp>) <JSStat> else <JSStat>>
   JSStat.JSIfNoElse = <if(<JSExp>) <JSStat>>
   JSStat.JSWhile = <while(<JSExp>) <JSStat>>
-  JSStat.JSTryCatch = <try { <JSStat*; separator="\n"> } catch(<JSID>) { <JSStat*; separator="\n"> }>
-  JSStat.JSSwitch = <switch(<JSExp>) { <Case*; separator="\n"> }>
-  Case.JSCase = <case <JSExp> : <JSStat*; separator="\n">>
-  Case.JSDefaultCase = <default : <JSStat*; separator="\n">>
-  JSStat.JSBreak = <break ;>
-  JSStat.JSThrow = <throw <JSExp> ;>
-  JSStat.JSReturn = <return <JSExp> ;>
-  JSStat.JSReturn = <return ;>
-  JSStat.JSDelete = <delete <JSExp> ;>
-  JSStat.JSExpStat = <<JSExp> ;>
-  JSStat.JSBlock = <{ <JSStat*; separator="\n"> }>
-  JSStat.JSFunctionDecl = <function <JSID>(<JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
-  JSStat.JSAsyncFunctionDecl = <function <JSID> ~( <JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
-  JSLVal.JSLFieldAccess = <<JSExp> . <JSID>>
+  JSStat.JSTryCatch = <
+    try {
+      <JSStat*; separator="\n">
+    } catch(<JSID>) {
+      <JSStat*; separator="\n">
+    }
+  >
+  JSStat.JSSwitch = <
+    switch(<JSExp>) {
+      <Case*; separator="\n">
+    }
+  >
+  Case.JSCase = <case <JSExp>: <JSStat*; separator="\n">>
+  Case.JSDefaultCase = <default: <JSStat*; separator="\n">>
+  JSStat.JSBreak = <break;>
+  JSStat.JSThrow = <throw <JSExp>;>
+  JSStat.JSReturn = <return <JSExp>;>
+  JSStat.JSReturn = <return;>
+  JSStat.JSDelete = <delete <JSExp>;>
+  JSStat.JSExpStat = <<JSExp>;>
+  JSStat.JSBlock = <
+    {
+      <JSStat*; separator="\n">
+    }
+  >
+  JSStat.JSFunctionDecl = <
+    function <JSID>(<JSID*; separator=", ">) {
+      <JSStat*; separator="\n">
+    }
+  >
+  JSStat.JSAsyncFunctionDecl = <
+    function <JSID> ~(<JSID*; separator=", ">) {
+      <JSStat*; separator="\n">
+    }
+  >
+  JSLVal.JSLFieldAccess = <<JSExp>.<JSID>>
   JSLVal.JSLVar = <<JSID>>
-  JSLVal.JSLPropAccess = <<JSExp> [<JSExp>]>
-  JSExp.JSRegex = </ <Pattern> / <JSID?>>
+  JSLVal.JSLPropAccess = <<JSExp>[<JSExp>]>
+  JSExp.JSRegex = </<Pattern>/<JSID?>>
   JSExp.JSStringLit = <<JSSTRING>>
   JSExp.JSIntLit = <<JSDecimalLiteral>>
   JSExp.JSIntLit = <<JSHexIntegerLiteral>>
@@ -57,8 +79,16 @@ templates
   JSExp.JSAsyncCall = <<JSExp> ~(<JSExp*; separator=", ">)>
   JSExp.JSPropAccess = <<JSExp> <JSIndexerSubscript>>
   JSIndexerSubscript.JSIndex = <[<JSExp>]>
-  JSExp.JSFunctionExp = <function(<JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
-  JSExp.JSAsyncFunctionExp = <function ~( <JSID*; separator=", ">) { <JSStat*; separator="\n"> }>
+  JSExp.JSFunctionExp = <
+    function(<JSID*; separator=", ">) {
+      <JSStat*; separator="\n">
+    }
+  >
+  JSExp.JSAsyncFunctionExp = <
+    function ~(<JSID*; separator=", ">) {
+      <JSStat*; separator="\n">
+    }
+  >
 
 context-free priorities
     {
