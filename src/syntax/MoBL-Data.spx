@@ -13,7 +13,6 @@ templates
       <EntityBodyDecl*; separator="\n">
     }
   >
-  EntityBodyDecl = <<ID>>
   EntityBodyDecl.Property = <
     <MetaAnnos>
     <ID> : <Type> (<Anno*; separator=", ">)
